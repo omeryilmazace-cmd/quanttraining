@@ -15,13 +15,16 @@ const elements = {
     vizTarget: document.getElementById('vizTarget'),
     logicText: document.getElementById('logicText'),
     progressFill: document.getElementById('progressFill'),
-    progressText: document.getElementById('progressText')
+    progressText: document.getElementById('progressText'),
+    sidebar: document.getElementById('sidebar'),
+    menuToggle: document.getElementById('menuToggle')
 };
 
 function init() {
     renderNav();
     loadQuestion(0);
     document.querySelector('.close-overlay').onclick = () => elements.overlay.classList.add('hidden');
+    elements.menuToggle.onclick = () => elements.sidebar.classList.toggle('open');
 }
 
 function renderNav() {

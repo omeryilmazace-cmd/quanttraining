@@ -27,8 +27,10 @@ body {
 .app-layout {
     display: flex;
     height: 100%;
+    position: relative;
 }
 
+/* Sidebar & Navigation */
 .sidebar {
     width: 300px;
     background: var(--sidebar);
@@ -37,6 +39,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    transition: 0.3s;
+    z-index: 50;
 }
 
 .brand {
@@ -79,6 +83,7 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    overflow-y: auto;
 }
 
 .nav-item {
@@ -88,6 +93,7 @@ nav {
     color: #94a3b8;
     transition: 0.2s;
     border: 1px solid transparent;
+    font-size: 0.9rem;
 }
 
 .nav-item:hover {
@@ -104,12 +110,29 @@ nav {
     color: var(--success);
 }
 
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 100;
+    background: var(--sidebar);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Main Content */
 .main-content {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
+    overflow-y: auto;
 }
 
 .card-container {
@@ -140,9 +163,9 @@ h1 {
 }
 
 .question-text {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--text-dim);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     line-height: 1.6;
 }
 
@@ -150,19 +173,20 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .option {
-    padding: 20px;
+    padding: 18px;
     border: 2px solid #e2e8f0;
-    border-radius: 16px;
+    border-radius: 14px;
     cursor: pointer;
     transition: 0.2s;
     font-weight: 500;
     display: flex;
     align-items: center;
     gap: 15px;
+    font-size: 1rem;
 }
 
 .option:hover {
@@ -188,13 +212,22 @@ h1 {
     color: var(--error);
 }
 
+.action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .btn {
-    padding: 16px 32px;
-    border-radius: 12px;
+    padding: 14px 28px;
+    border-radius: 10px;
     border: none;
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
+    font-size: 0.95rem;
+    flex: 1;
+    min-width: 140px;
 }
 
 .primary {
@@ -221,45 +254,85 @@ h1 {
     display: none !important;
 }
 
+/* Mobile Media Queries */
+@media (max-width: 900px) {
+    .sidebar {
+        position: fixed;
+        left: -300px;
+        height: 100%;
+        width: 280px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-content {
+        padding: 20px;
+        padding-top: 80px;
+    }
+
+    .card-container {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .question-text {
+        font-size: 1.1rem;
+    }
+}
+
 /* Overlay & Visualizer */
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.95);
-    z-index: 100;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 200;
     display: flex;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(8px);
+    padding: 20px;
 }
 
 .overlay-content {
     background: #0f172a;
-    width: 90%;
+    width: 100%;
     max-width: 1000px;
-    height: 80vh;
-    border-radius: 30px;
+    height: 90vh;
+    border-radius: 24px;
     position: relative;
-    padding: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-y: auto;
 }
 
 .close-overlay {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 2rem;
+    top: 15px;
+    right: 15px;
+    font-size: 2.5rem;
     color: white;
     background: none;
     border: none;
     cursor: pointer;
+    line-height: 1;
 }
 
 .viz-canvas {
-    flex: 1;
-    border-radius: 20px;
+    flex-shrink: 0;
+    min-height: 250px;
+    border-radius: 16px;
     background: #020617;
     margin-bottom: 20px;
     display: flex;
@@ -272,40 +345,42 @@ h1 {
 
 .logic-box {
     background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 16px;
+    padding: 25px;
+    border-radius: 12px;
     color: #cbd5e1;
+    font-size: 0.95rem;
 }
 
 .logic-box h3 {
     color: white;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
 }
 
 /* Injected Viz Styles */
 .viz-card {
-    width: 120px;
-    height: 180px;
+    width: 80px;
+    height: 120px;
     background: white;
     color: #1e293b;
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    margin: 0 20px;
+    margin: 0 10px;
 }
 
 .coin-grid-viz {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 10px;
+    gap: 5px;
 }
 
 .coin {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: #334155;
 }
@@ -316,9 +391,9 @@ h1 {
 }
 
 .clock-viz {
-    width: 250px;
-    height: 250px;
-    border: 8px solid #334155;
+    width: 200px;
+    height: 200px;
+    border: 6px solid #334155;
     border-radius: 50%;
     position: relative;
 }
@@ -332,14 +407,14 @@ h1 {
 }
 
 .hour-h {
-    width: 6px;
-    height: 60px;
+    width: 5px;
+    height: 50px;
     background: #818cf8;
 }
 
 .min-h {
-    width: 4px;
-    height: 90px;
+    width: 3px;
+    height: 75px;
 }
 
 /* Animations */
@@ -369,15 +444,15 @@ h1 {
 
 @keyframes liftUp {
     0% {
-        transform: translateY(20px);
+        transform: translateY(15px);
     }
 
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-15px);
     }
 
     100% {
-        transform: translateY(20px);
+        transform: translateY(15px);
     }
 }
 
