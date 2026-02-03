@@ -233,6 +233,7 @@ elements.vizBtn.onclick = () => {
     if (q.id === 'elevator') showElevatorViz();
     if (q.id === 'children') showChildrenViz();
     if (q.id === 'dollar') showDollarViz();
+    if (q.id === 'rabbit') showRabbitViz();
 };
 
 // --- Matrix-Optimized Visualization Sub-factories ---
@@ -429,7 +430,7 @@ function showChildrenViz() {
 function showDollarViz() {
     elements.vizTarget.innerHTML = `
         <div style="text-align:center; color:var(--primary)">
-            <div style="background:rgba(0,255,65,0.1); padding:20px; border:1px solid var(--primary); margin-bottom:20px; box-shadow:var(--glow)">TOTAL_LOG: $27 RECOVERED</div>
+            <div style="background:rgba(0,255,65,0.1); padding:20px; border-radius:4px; border:1px solid var(--primary); margin-bottom:20px; box-shadow:var(--glow)">TOTAL_LOG: $27 RECOVERED</div>
             <div style="display:flex; gap:25px; justify-content:center">
                 <div style="border:1px solid var(--primary); padding:12px; background:#000">SERVER: $25</div>
                 <div style="border:1px solid var(--gold); padding:12px; background:#000; color:var(--gold)">LEAK: $2</div>
@@ -437,6 +438,77 @@ function showDollarViz() {
             <p style="margin-top:20px; font-size:0.8rem; font-family:monospace">25 + 2 = 27. LOGS BALANCED.</p>
         </div>
     `;
+}
+
+function showRabbitViz() {
+    const hint = currentLang === 'tr' ? "Zıplamak için düğmelere tıkla!" : "Click buttons to jump!";
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${hint}</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:20px; width:100%">
+            <div id="staircase" style="position:relative; width:220px; height:220px; border-bottom:2px solid var(--primary); border-left:2px solid var(--primary); background:rgba(0,0,0,0.5)">
+                <div id="rabbit" style="position:absolute; bottom:0; left:0; width:20px; height:20px; background:var(--primary); border-radius:50%; box-shadow:var(--glow); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index:10;"></div>
+            </div>
+            <div style="display:flex; gap:10px">
+                <button class="btn primary small" id="jump1" style="max-width:60px; padding:8px">+1</button>
+                <button class="btn primary small" id="jump2" style="max-width:60px; padding:8px">+2</button>
+                <button class="btn secondary small" id="resetJump" style="max-width:80px; padding:8px">Reset</button>
+            </div>
+            <div id="stepCounter" style="color:var(--gold); font-weight:800; font-family:monospace; font-size:1.1rem">STEP: 0</div>
+        </div>
+    `;
+
+    const staircase = document.getElementById('staircase');
+    const rabbit = document.getElementById('rabbit');
+    const stepCounter = document.getElementById('stepCounter');
+    let currentStep = 0;
+
+    for (let i = 1; i <= 10; i++) {
+        const step = document.createElement('div');
+        step.style.position = 'absolute';
+        step.style.bottom = (i * 20) + 'px';
+        step.style.left = (i * 20) - 5 + 'px';
+        step.style.width = '25px';
+        step.style.height = '4px';
+        step.style.background = 'rgba(0, 255, 65, 0.3)';
+        step.style.boxShadow = "0 0 5px var(--primary)";
+        staircase.appendChild(step);
+    }
+
+    const updateRabbit = () => {
+        rabbit.style.bottom = (currentStep * 20) + 'px';
+        rabbit.style.left = (currentStep * 20) + 'px';
+        stepCounter.innerText = `STEP: ${currentStep}`;
+        if (currentStep >= 10) {
+            rabbit.style.background = "#fff";
+            rabbit.style.boxShadow = "0 0 20px #fff";
+            stepCounter.style.color = "var(--success)";
+            stepCounter.innerText = currentLang === 'tr' ? "10. BASAMAK! (Hedef)" : "STEP 10! (Goal)";
+        } else {
+            rabbit.style.background = "var(--primary)";
+            rabbit.style.boxShadow = "var(--glow)";
+            stepCounter.style.color = "var(--gold)";
+        }
+    };
+
+    document.getElementById('jump1').onclick = () => {
+        if (currentStep < 10) {
+            currentStep += 1;
+            updateRabbit();
+        }
+    };
+    document.getElementById('jump2').onclick = () => {
+        if (currentStep <= 8) {
+            currentStep += 2;
+            updateRabbit();
+        } else if (currentStep === 9) {
+            currentStep = 10;
+            updateRabbit();
+        }
+    };
+    document.getElementById('resetJump').onclick = () => {
+        currentStep = 0;
+        updateRabbit();
+    };
 }
 
 init();
