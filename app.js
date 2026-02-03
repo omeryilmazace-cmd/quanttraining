@@ -332,21 +332,37 @@ function showCardsViz() {
 
 function showCoinsViz() {
     const hint = currentLang === 'tr' ? "10 parayı B'ye taşı (Tıkladığında otomatik ters dönerler!)" : "Move 10 bits to B (They flip automatically on click!)";
+    const headsText = currentLang === 'tr' ? "Tura Sayısı" : "Heads Count";
     elements.vizTarget.innerHTML = `
         <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${hint}</div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; width:100%; max-width:600px">
             <div id="gA" style="border:1px solid var(--primary); background:rgba(0,255,65,0.05); padding:15px; border-radius:4px">
                 <div style="font-size:0.7rem; color:var(--primary); margin-bottom:8px">SECTOR_A (90)</div>
                 <div class="coin-grid-viz small" id="gridA"></div>
+                <div style="margin-top:10px; font-size:0.75rem; color:var(--gold)" id="countA">${headsText}: 10</div>
             </div>
             <div id="gB" style="border:1px solid var(--primary); background:rgba(0,255,65,0.05); padding:15px; border-radius:4px">
                 <div style="font-size:0.7rem; color:var(--primary); margin-bottom:8px">SECTOR_B (10)</div>
                 <div class="coin-grid-viz small" id="gridB"></div>
+                <div style="margin-top:10px; font-size:0.75rem; color:var(--gold)" id="countB">${headsText}: 0</div>
             </div>
+        </div>
+        <div id="coinMatchMsg" class="hidden" style="margin-top:20px; color:var(--success); font-weight:900; text-align:center; animation: matrixPulse 1s infinite alternate">
+            ${currentLang === 'tr' ? "EŞLEŞME SAĞLANDI! (A = B)" : "MATCH DETECTED! (A = B)"}
         </div>
     `;
     const gridA = document.getElementById('gridA');
     const gridB = document.getElementById('gridB');
+    const updateCounts = () => {
+        const a = gridA.querySelectorAll('.coin.head').length;
+        const b = gridB.querySelectorAll('.coin.head').length;
+        document.getElementById('countA').innerText = `${headsText}: ${a}`;
+        document.getElementById('countB').innerText = `${headsText}: ${b}`;
+        if (gridB.children.length === 10 && a === b) {
+            document.getElementById('coinMatchMsg').classList.remove('hidden');
+        }
+    };
+
     for (let i = 0; i < 100; i++) {
         const c = document.createElement('div');
         c.className = 'coin' + (i < 10 ? ' head' : '');
@@ -356,6 +372,7 @@ function showCoinsViz() {
                 gridB.appendChild(c);
                 c.classList.toggle('head');
                 c.style.filter = "hue-rotate(90deg)";
+                updateCounts();
             }
         };
         gridA.appendChild(c);
