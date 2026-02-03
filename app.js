@@ -239,6 +239,21 @@ elements.vizBtn.onclick = () => {
     if (q.id === 'eggs') showEggsViz();
     if (q.id === 'poison') showPoisonViz();
     if (q.id === 'gold') showGoldViz();
+    if (q.id === 'lilypad') showLilypadViz();
+    if (q.id === 'airplane') showAirplaneViz();
+    if (q.id === 'zeros') showZerosViz();
+    if (q.id === 'bulbs') showBulbsViz();
+    if (q.id === 'birthday') showBirthdayViz();
+    if (q.id === 'meeting') showMeetingViz();
+    if (q.id === 'ninecount') showNineViz();
+    if (q.id === 'stick') showStickViz();
+    if (q.id === 'biasedcoin') showBiasedViz();
+    if (q.id === 'jellybean') showJellyViz();
+    if (q.id === 'speedboat') showSpeedboatViz();
+    if (q.id === 'marbles') showMarblesViz();
+    if (q.id === 'rope15') showRope15Viz();
+    if (q.id === 'striving') showStrivingViz();
+    if (q.id === 'cards2') showCards2Viz();
 };
 
 // --- Matrix-Optimized Visualization Sub-factories ---
@@ -514,6 +529,192 @@ function showRabbitViz() {
         currentStep = 0;
         updateRabbit();
     };
+}
+
+function showLilypadViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:var(--primary); margin-bottom:15px">EVOLUTION SIMULATION</div>
+        <div id="pond" style="width:200px; height:200px; border:2px solid var(--primary); border-radius:50%; margin:auto; position:relative; overflow:hidden; background:rgba(0,15,40,0.4)">
+            <div id="pad" style="width:0; height:0; background:var(--primary); position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); border-radius:50%; transition:1s; box-shadow:var(--glow)"></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:20px; justify-content:center">
+            <button class="btn primary small" id="day47">Day 47</button>
+            <button class="btn primary small" id="day48">Day 48</button>
+        </div>
+    `;
+    document.getElementById('day47').onclick = () => {
+        document.getElementById('pad').style.width = '141px'; document.getElementById('pad').style.height = '141px';
+    };
+    document.getElementById('day48').onclick = () => {
+        document.getElementById('pad').style.width = '200px'; document.getElementById('pad').style.height = '200px';
+    };
+}
+
+function showAirplaneViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(10, 1fr); gap:5px; padding:10px; border:1px solid var(--primary); background:rgba(0,0,0,0.5)">
+            ${[...Array(99)].map((_, i) => `<div style="width:15px; height:15px; border:1px solid var(--text-dim)"></div>`).join('')}
+            <div id="lastSeat" style="width:15px; height:15px; background:var(--gold); border:1px solid var(--gold); box-shadow:var(--glow)"></div>
+        </div>
+        <div style="margin-top:15px; font-size:0.75rem; color:var(--primary); text-align:center">Last Passenger's Fate: 50% Choice</div>
+    `;
+}
+
+function showZerosViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:var(--primary); font-family:monospace; font-size:0.85rem">
+            100! = 100 * 99 * ... * 5 * ... * 1<br><br>
+            Count 5s: 100/5 = 20<br>
+            Count 25s: 100/25 = 4<br><br>
+            <span style="color:var(--gold); font-weight:900">Total: 24 Zeros</span>
+        </div>
+    `;
+}
+
+function showBulbsViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(10, 1fr); gap:5px; justify-content:center">
+            ${[...Array(100)].map((_, i) => {
+        const isSquare = Math.sqrt(i + 1) % 1 === 0;
+        return `<div style="width:12px; height:12px; border:1px solid var(--primary); ${isSquare ? 'background:var(--primary); box-shadow:var(--glow)' : 'background:#222'}"></div>`;
+    }).join('')}
+        </div>
+        <div style="margin-top:15px; color:var(--gold); font-size:0.75rem; text-align:center">Only Perfect Squares Have Odd Divisors</div>
+    `;
+}
+
+function showBirthdayViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="background:rgba(0,255,65,0.05); padding:15px; border:1px solid var(--primary); font-family:monospace; font-size:0.8rem; color:var(--primary)">
+            Pairs for N=23: 23*22/2 = 253<br>
+            P(diff) = (364/365)*(363/365)...<br>
+            Result: <span style="color:#fff">49.3% Distinct</span><br>
+            <span style="color:var(--gold)">Success: 50.7% Match</span>
+        </div>
+    `;
+}
+
+function showMeetingViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="width:120px; height:120px; border:2px solid var(--primary); position:relative; background:#000">
+            <div style="position:absolute; top:25%; left:0; width:75%; height:75%; background:rgba(0,255,65,0.2); transform: skew(0, 0)"></div>
+            <div style="position:absolute; bottom:0; right:0; width:100%; height:100%; border:1px dashed var(--text-dim)"></div>
+            <div style="font-size:0.5rem; position:absolute; bottom:-15px; left:0">12:00</div>
+            <div style="font-size:0.5rem; position:absolute; bottom:-15px; right:0">1:00</div>
+        </div>
+        <div style="margin-top:20px; color:var(--gold); font-size:0.7rem">Meeting Zone: |X - Y| ≤ 15</div>
+    `;
+}
+
+function showNineViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; color:var(--primary); font-family:monospace; font-size:0.8rem">
+            <div>09</div><div>19</div><div>29</div><div>39</div><div>49</div>
+            <div>59</div><div>69</div><div>79</div><div>89</div><div style="color:#fff">90</div>
+            <div style="color:#fff">91</div><div style="color:#fff">92</div><div style="color:#fff">93</div><div style="color:#fff">94</div><div style="color:#fff">95</div>
+            <div style="color:#fff">96</div><div style="color:#fff">97</div><div style="color:#fff">98</div><div style="color:#fff">99(2)</div><div style="color:var(--gold)">= 20</div>
+        </div>
+    `;
+}
+
+function showStickViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="width:180px; height:4px; background:var(--text-dim); position:relative">
+            <div style="position:absolute; left:30%; height:10px; top:-3px; width:2px; background:var(--primary)"></div>
+            <div style="position:absolute; left:75%; height:10px; top:-3px; width:2px; background:var(--primary)"></div>
+        </div>
+        <div style="margin-top:25px; color:var(--gold); font-size:0.75rem">Condition: a+b > c, etc.</div>
+    `;
+}
+
+function showBiasedViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:20px; justify-content:center">
+            <div style="text-align:center">
+                <div style="color:var(--text-dim)">H - T</div>
+                <div style="color:var(--primary)">0.6 * 0.4</div>
+                <div style="font-weight:900">= 0.24</div>
+            </div>
+            <div style="font-size:1.5rem">==</div>
+            <div style="text-align:center">
+                <div style="color:var(--text-dim)">T - H</div>
+                <div style="color:var(--primary)">0.4 * 0.6</div>
+                <div style="font-weight:900">= 0.24</div>
+            </div>
+        </div>
+    `;
+}
+
+function showJellyViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:15px">
+            <div style="padding:10px; border:1px solid #ff4141; color:#ff4141">RED (False)</div>
+            <div style="padding:10px; border:1px solid #4141ff; color:#4141ff">BLUE (False)</div>
+            <div style="padding:10px; border:1px solid var(--gold); color:var(--gold); box-shadow:var(--glow)">MIX (False)</div>
+        </div>
+        <div style="margin-top:20px; font-size:0.75rem; color:var(--primary)">Start with the Mixed Jar!</div>
+    `;
+}
+
+function showSpeedboatViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:var(--primary); font-family:monospace">
+            Durgun: 10 + 10 = 20 / 10 = <span style="color:#fff">2.0 hrs</span><br>
+            Akıntı: 10/12 + 10/8 = <span style="color:var(--error)">2.08 hrs</span><br><br>
+            <span style="color:var(--gold)">Akıntı her zaman geciktirir.</span>
+        </div>
+    `;
+}
+
+function showMarblesViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:8px; justify-content:center">
+            <div style="width:20px; height:20px; border-radius:50%; background:#ff4141; box-shadow:0 0 10px #ff4141"></div>
+            <div style="width:20px; height:20px; border-radius:50%; background:#ff4141; box-shadow:0 0 10px #ff4141"></div>
+            <div style="width:20px; height:20px; border-radius:50%; background:#ff4141; box-shadow:0 0 10px #ff4141"></div>
+            <div style="width:20px; height:20px; border-radius:50%; background:#4141ff"></div>
+        </div>
+        <div style="margin-top:15px; color:var(--gold); font-size:0.8rem">3/4 * 2/3 = 1/2</div>
+    `;
+}
+
+function showRope15Viz() {
+    elements.vizTarget.innerHTML = `
+        <div style="width:150px; height:6px; background:var(--primary); position:relative; border-radius:3px">
+            <div style="position:absolute; left:0; top:-10px; animation: glowPulse 1s infinite">🔥</div>
+            <div style="position:absolute; right:0; top:-10px; animation: glowPulse 1s infinite">🔥</div>
+            <div style="position:absolute; left:50%; top:-10px; animation: glowPulse 1s infinite">🔥</div>
+            <div style="position:absolute; left:50%; top:-25px; color:var(--primary); transform:translateX(-50%); font-size:1.5rem">|</div>
+        </div>
+        <style>@keyframes glowPulse { from {text-shadow: 0 0 5px #fff} to {text-shadow: 0 0 15px var(--primary)} }</style>
+    `;
+}
+
+function showStrivingViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="font-family:monospace; font-size:1.1rem; color:var(--primary)">
+            1/7 = 0.<span style="color:var(--gold)">1 4 2 8 5 7</span>...<br><br>
+            Cycle: 6 digits<br>
+            100 mod 6 = 4<br>
+            4th digit = <span style="color:#fff; text-shadow:var(--glow)">8</span>
+        </div>
+    `;
+}
+
+function showCards2Viz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:30px; justify-content:center">
+            <div style="border:1px solid var(--primary); padding:10px">
+                <div style="color:#ff4141">R: X</div>
+                <div style="color:var(--primary)">B: 26-X</div>
+            </div>
+            <div style="border:1px solid var(--primary); padding:10px">
+                <div style="color:#ff4141">R: 26-X</div>
+                <div style="color:var(--primary)">B: X</div>
+            </div>
+        </div>
+        <div style="margin-top:15px; color:var(--gold); font-size:0.8rem; text-align:center">P1 Red == P2 Black == X</div>
+    `;
 }
 
 function showSwitchesViz() {

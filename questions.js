@@ -268,5 +268,275 @@ const questions = [
             en: "Cut into 1, 2, and 4 units. Day 1: Give 1. Day 2: Give 2, take back 1. Day 3: Give 1. Day 4: Give 4, take 1 and 2. This continues like binary counting.",
             tr: "Çubuğu 1, 2 ve 4 birimlik parçalara bölün. 1. Gün: 1'i ver. 2. Gün: 2'yi ver, 1'i geri al. 3. Gün: 1'i ver. 4. Gün: 4'ü ver, 1 ve 2'yi geri al. İkili sayma mantığıyla devam eder."
         }
+    },
+    {
+        id: "lilypad",
+        category: { en: "Exponential Growth", tr: "Üssel Büyüme" },
+        title: { en: "The Growing Lily Pad", tr: "Büyüyen Nilüfer" },
+        question: {
+            en: "A lily pad doubles in size every day. It takes 48 days to cover the entire pond. On which day did it cover exactly HALF of the pond?",
+            tr: "Bir nilüfer her gün iki katına çıkıyor. Tüm gölü kaplaması 48 gün sürüyor. Gölün tam yarısını kaçıncı günde kaplamıştır?"
+        },
+        options: {
+            en: ["24", "47", "12", "40", "46", "30"],
+            tr: ["24", "47", "12", "40", "46", "30"]
+        },
+        correct: 1,
+        logic: {
+            en: "If it doubles every day, then the day before it covered the whole pond (Day 48), it must have covered half of it. So, 48 - 1 = 47.",
+            tr: "Her gün iki katına çıkıyorsa, gölün tamamının kaplandığı günden (48. gün) bir önceki gün yarısı kaplanmış olmalıdır. Yani 48 - 1 = 47."
+        }
+    },
+    {
+        id: "airplane",
+        category: { en: "Probability", tr: "Olasılık" },
+        title: { en: "The Last Passenger", tr: "Son Yolcu" },
+        question: {
+            en: "100 people are boarding a 100-seat plane. The first person lost their ticket and picks a random seat. Everyone else takes their assigned seat or a random one if theirs is taken. What is the probability that the 100th person gets their assigned seat?",
+            tr: "100 kişi 100 koltuklu uçağa biniyor. İlk kişi biletini kaybetmiş ve rastgele bir yere oturuyor. Diğer herkes kendi koltuğu boşsa oraya, değilse rastgele bir yere oturuyor. 100. kişinin kendi koltuğuna oturma olasılığı nedir?"
+        },
+        options: {
+            en: ["1/100", "1/2", "1/50", "99/100", "1/3", "0"],
+            tr: ["1/100", "1/2", "1/50", "99/100", "1/3", "0"]
+        },
+        correct: 1,
+        logic: {
+            en: "When the 100th passenger boards, only two seats are left: their own or the first person's. By symmetry, they have 1/2 chance for either.",
+            tr: "100. yolcu bindiğinde geriye sadece iki koltuk kalmıştır: ya kendi koltuğu ya da ilk kişinin koltuğu. Simetriden dolayı her ikisinin de şansı %50'dir."
+        }
+    },
+    {
+        id: "zeros",
+        category: { en: "Number Theory", tr: "Sayılar Teorisi" },
+        title: { en: "Trailing Zeros", tr: "Sondaki Sıfırlar" },
+        question: {
+            en: "How many trailing zeros are in 100! (100 factorial)?",
+            tr: "100! (100 faktöriyel) sayısının sonunda kaç tane sıfır vardır?"
+        },
+        options: {
+            en: ["10", "20", "24", "25", "11", "21"],
+            tr: ["10", "20", "24", "25", "11", "21"]
+        },
+        correct: 2,
+        logic: {
+            en: "Zeros are created by 2*5 pairs. There are more 2s than 5s. Count powers of 5: 100/5 = 20, 100/25 = 4. 20 + 4 = 24 zeros.",
+            tr: "Sıfırlar 2*5 çiftlerinden oluşur. 2 sayısı 5'ten fazladır. 5'in kuvvetlerini sayarız: 100/5 = 20, 100/25 = 4. Toplam 20 + 4 = 24 sıfır."
+        }
+    },
+    {
+        id: "bulbs",
+        category: { en: "Logic", tr: "Mantık" },
+        title: { en: "100 Light Bulbs", tr: "100 Ampul" },
+        question: {
+            en: "100 bulbs are OFF. 1st person toggles all. 2nd toggles every 2nd. 3rd toggles every 3rd... after 100 people, how many bulbs are ON?",
+            tr: "100 ampul kapalı. 1. kişi hepsini, 2. kişi her 2 ampulden birini, 3. kişi her 3 ampulden birini (açıksa kapatır, kapalıysa açar) değiştiriyor. 100 kişiden sonra kaç ampul AÇIK kalır?"
+        },
+        options: {
+            en: ["1", "10", "50", "100", "0", "25"],
+            tr: ["1", "10", "50", "100", "0", "25"]
+        },
+        correct: 1,
+        logic: {
+            en: "A bulb is toggled for each of its divisors. Only square numbers have an odd number of divisors. Square numbers up to 100 are (1, 4, 9... 100) — there are 10.",
+            tr: "Bir ampul, bölen sayısı kadar değiştirilir. Sadece tam kare sayıların bölen sayısı tektir. 100'e kadar 10 tane tam kare sayı vardır."
+        }
+    },
+    {
+        id: "birthday",
+        category: { en: "Probability", tr: "Olasılık" },
+        title: { en: "Birthday Paradox", tr: "Doğum Günü Paradoksu" },
+        question: {
+            en: "How many people are needed in a room to have a >50% chance that two share the same birthday?",
+            tr: "Bir odada kaç kişi olursa, en az iki kişinin aynı gün doğmuş olma olasılığı %50'den yüksek olur?"
+        },
+        options: {
+            en: ["23", "183", "366", "50", "75", "10"],
+            tr: ["23", "183", "366", "50", "75", "10"]
+        },
+        correct: 0,
+        logic: {
+            en: "With 23 people, the number of pairs is 23*22/2 = 253. The cumulative probability of uniqueness drops below 50% quickly.",
+            tr: "23 kişi varken 253 farklı çift oluşur. Her çiftin farklı günde doğma şansının birleşimi toplam olasılığı hızla %50'nin altına düşürür."
+        }
+    },
+    {
+        id: "meeting",
+        category: { en: "Geometry Prob", tr: "Geometrik Olasılık" },
+        title: { en: "The Park Meeting", tr: "Park Buluşması" },
+        question: {
+            en: "Two people agree to meet at a park between 12:00 and 1:00. Each will wait exactly 15 minutes. What is the probability they meet?",
+            tr: "İki kişi 12:00 ile 13:00 arasında parkta buluşmaya karar verir. Her biri tam 15 dakika bekleyecektir. Buluşma olasılıkları nedir?"
+        },
+        options: {
+            en: ["1/4", "1/2", "7/16", "9/16", "1/3", "3/8"],
+            tr: ["1/4", "1/2", "7/16", "9/16", "1/3", "3/8"]
+        },
+        correct: 2,
+        logic: {
+            en: "Model it on a 60x60 square. The area where |x-y| <= 15 is 1 - (45/60)^2 = 1 - (3/4)^2 = 1 - 9/16 = 7/16.",
+            tr: "60x60'lık bir karede düşünürsek, buluşmama alanı (45/60)'lık iki üçgendir. 1 - (45/60)^2 = 7/16 sonucuna ulaşılır."
+        }
+    },
+    {
+        id: "ninecount",
+        category: { en: "Counting", tr: "Sayma" },
+        title: { en: "How Many 9s?", tr: "Kaç Tane 9?" },
+        question: {
+            en: "How many times does the digit 9 appear in the integers from 1 to 100?",
+            tr: "1'den 100'e kadar olan tam sayılarda 9 rakamı kaç kez kullanılır?"
+        },
+        options: {
+            en: ["10", "11", "19", "20", "9", "21"],
+            tr: ["10", "11", "19", "20", "9", "21"]
+        },
+        correct: 3,
+        logic: {
+            en: "In each decade (0-9, 10-19...) 9 appears once as units digit (10 times). In the 90s, it also appears as tens digit (10 times). Total: 20.",
+            tr: "Birler basamağında 10 kez (9, 19... 99), onlar basamağında 10 kez (90, 91... 99) görülür. Toplam 20 kez kullanılır."
+        }
+    },
+    {
+        id: "stick",
+        category: { en: "Geometry Prob", tr: "Geometrik Olasılık" },
+        title: { en: "Breaking a Stick", tr: "Çubuk Kırma" },
+        question: {
+            en: "A stick is broken at two random points. What is the probability that the three pieces can form a triangle?",
+            tr: "Bir çubuk rastgele iki noktadan kırılıyor. Oluşan üç parçanın bir üçgen oluşturma olasılığı nedir?"
+        },
+        options: {
+            en: ["1/2", "1/3", "1/4", "1/8", "2/3", "1/6"],
+            tr: ["1/2", "1/3", "1/4", "1/8", "2/3", "1/6"]
+        },
+        correct: 2,
+        logic: {
+            en: "Triangle inequality requires that each piece is shorter than the sum of others (less than half the stick). In a 2D plane of cut points, this represents 1/4 of total area.",
+            tr: "Üçgen eşitsizliği gereği her parça yarım çubuktan kısa olmalıdır. Kesim noktaları kümesinde bu alan toplamın 1/4'üne denk gelir."
+        }
+    },
+    {
+        id: "biasedcoin",
+        category: { en: "Probability", tr: "Olasılık" },
+        title: { en: "The Biased Coin", tr: "Yanlı Para" },
+        question: {
+            en: "You have a biased coin that lands on heads with 60% probability. How can you simulate a fair 50/50 flip?",
+            tr: "Tura gelme şansı %60 olan hileli bir paranız var. Bununla %50/%50 adil bir yazı-tura simülasyonunu nasıl yaparsınız?"
+        },
+        options: {
+            en: ["Flip twice: HT vs TH", "Flip once", "Flip four times", "Impossible", "Flip until T is twice", "Subtract 10% from H"],
+            tr: ["İki kez at: YT vs TY", "Bir kez at", "Dört kez at", "İmkansız", "2 kez Y gelene kadar at", "H'den %10 çıkar"]
+        },
+        correct: 0,
+        logic: {
+            en: "Flip twice. HT and TH both have the same probability p*(1-p). If you get HH or TT, discard and repeat. HT=Heads, TH=Tails.",
+            tr: "İki kez atın. YT ve TY gelme olasılıkları eşittir (p*(1-p)). YY veya TT gelirse geçersiz sayıp tekrar atın. YT=Tura, TY=Yazı."
+        }
+    },
+    {
+        id: "jellybean",
+        category: { en: "Logic", tr: "Mantık" },
+        title: { en: "The Jar Logic", tr: "Kavanoz Mantığı" },
+        question: {
+            en: "Three jars contain (Red, Blue, Mixed). All are MISLABELED. You pick one bean from one jar. Which jar do you pick to label all correctly?",
+            tr: "Üç kavanozda (Kırmızı, Mavi, Karışık) şekerler var. Hepsi YANLIŞ etiketlenmiş. Tüm etiketleri düzeltmek için hangi kavanozdan şeker çekmelisiniz?"
+        },
+        options: {
+            en: ["Red", "Blue", "Mixed", "Any jar", "Impossible", "Pick from two"],
+            tr: ["Kırmızı", "Mavi", "Karışık", "Herhangi biri", "İmkansız", "İkisinden de çek"]
+        },
+        correct: 2,
+        logic: {
+            en: "Pick from Mixed. Since it's mislabeled, it's either all Red or all Blue. If you get Red, then the Blue labeled jar must be Mixed (as it can't be Blue), and the Red labeled must be Blue.",
+            tr: "Karışık (Mixed) etiketli olandan çekin. Yanlış etiketlendiği için ya hepsi kırmızı ya da hepsidir mavidir. Birini bulunca diğerleri zincirleme çözülür."
+        }
+    },
+    {
+        id: "speedboat",
+        category: { en: "Physics/Math", tr: "Fizik/Mat" },
+        title: { en: "The Speedboat", tr: "Sürat Teknesi" },
+        question: {
+            en: "A boat goes 10 mph in still water. If the current is 2 mph, does a round trip (10 miles each way) take longer or shorter than in still water?",
+            tr: "Durgun suda 10 mil/sa hız yapan bir tekne, 2 mil/sa akıntısı olan bir nehirde gidiş-dönüş (toplam 20 mil) yaparsa mı daha uzun sürer, yoksa durgun suda mı?"
+        },
+        options: {
+            en: ["Longer in current", "Shorter in current", "Same time", "Depends on depth", "Longer in still water", "Twice as long"],
+            tr: ["Akıntıda daha uzun", "Akıntıda daha kısa", "Aynı süre", "Derinliğe bağlı", "Durgun suda uzun", "İki kat sürer"]
+        },
+        correct: 0,
+        logic: {
+            en: "In current: Time = 10/12 + 10/8 = 0.833 + 1.25 = 2.083 hrs. Still water: 10/10 + 10/10 = 2 hrs. Current always slows down the total trip.",
+            tr: "Akıntıda: 10/12 + 10/8 = 2.083 saat. Durgun suda: 20/10 = 2 saat. Akıntı her zaman toplam süreyi geciktirir."
+        }
+    },
+    {
+        id: "marbles",
+        category: { en: "Probability", tr: "Olasılık" },
+        title: { en: "Basket of Marbles", tr: "Bilye Sepeti" },
+        question: {
+            en: "A box has 100 marbles (some Red, some Blue). You draw two. The probability they are both Red is 1/2. What is the minimum number of marbles?",
+            tr: "Bir kutuda 100 bilye var. Rastgele iki tane çekiyorsun. İkisinin de kırmızı olma olasılığı 1/2. Kutuda en az kaç bilye vardır?"
+        },
+        options: {
+            en: ["3", "4", "21", "25", "50", "100"],
+            tr: ["3", "4", "21", "25", "50", "100"]
+        },
+        correct: 0,
+        logic: {
+            en: "Solve r/n * (r-1)/(n-1) = 1/2. Smallest integer solution is n=4, r=3 (3/4 * 2/3 = 1/2). n=21, r=15 also works, but 4 is the minimum.",
+            tr: "r/n * (r-1)/(n-1) = 1/2 denklemini çözersek, en küçük tamsayı çözümü n=4, r=3'tür. En az 4 bilye (3'ü kırmızı) gerekir."
+        }
+    },
+    {
+        id: "rope15",
+        category: { en: "Logic", tr: "Mantık" },
+        title: { en: "Rope 15", tr: "İp 15" },
+        question: {
+            en: "One rope takes 1 hour to burn. How do you measure exactly 15 minutes using only one rope?",
+            tr: "Bir ipin yanması 1 saat sürüyor. Sadece bir ip kullanarak tam 15 dakikayı nasıl ölçersiniz?"
+        },
+        options: {
+            en: ["Impossible", "Fold in half and light both ends", "Fold in 4", "Rope must be even", "Light one side", "Cut the rope"],
+            tr: ["İmkansız", "İkiye katlayıp her iki ucu da yak", "Dörde katla", "İp düzenli olmalı", "Tek tarafı yak", "İpi kes"]
+        },
+        correct: 1,
+        logic: {
+            en: "If you light both ends, it burns in 30 mins. If you fold it and light both ends of the double-rope, it burns in 15 mins. (Assuming layers catch each other).",
+            tr: "İpi ikiye katlayıp her iki ucunu da (dört katman gibi) yakarsanız, süre dörde bölünür ve 15 dakika elde edilir."
+        }
+    },
+    {
+        id: "striving",
+        category: { en: "Math", tr: "Matematik" },
+        title: { en: "The 100th Digit", tr: "100. Basamak" },
+        question: {
+            en: "What is the 100th digit of 1/7?",
+            tr: "1/7 sayısının virgülden sonraki 100. basamağı nedir?"
+        },
+        options: {
+            en: ["1", "4", "2", "8", "5", "7"],
+            tr: ["1", "4", "2", "8", "5", "7"]
+        },
+        correct: 3,
+        logic: {
+            en: "1/7 = 0.142857 repeated. The cycle is 6 digits. 100 mod 6 = 4. The 4th digit in 142857 is 8.",
+            tr: "1/7 = 0.142857 devrederek gider. Periyot 6 basamaktır. 100 mod 6 = 4 eder. 142857 dizisinin 4. rakamı 8'dir."
+        }
+    },
+    {
+        id: "cards2",
+        category: { en: "Logic", tr: "Mantık" },
+        title: { en: "Red vs Black Cards", tr: "Kırmızı vs Siyah" },
+        question: {
+            en: "A 52-card deck is split into two equal piles. Is the number of red cards in pile 1 always equal to the number of black cards in pile 2?",
+            tr: "52 kartlık bir deste iki eşit parçaya ayrılıyor. 1. destedeki kırmızı kart sayısı her zaman 2. destedeki siyah kart sayısına eşit midir?"
+        },
+        options: {
+            en: ["Yes, Always", "No, never", "Only if shuffled", "Only if sorted", "Depends on luck", "50% chance"],
+            tr: ["Evet, Herzaman", "Hayır, asla", "Sadece karıştırılırsa", "Sadece sıralıysa", "Şansa bağlı", "%50 şans"]
+        },
+        correct: 0,
+        logic: {
+            en: "Let r1, b1 be red/black in pile 1. r1+b1=26 and r1+r2=26 (total reds). Therefore b1 = 26-r1 and r2 = 26-r1. b1 = r2 always.",
+            tr: "1. destedeki kırmızı (r1) ve siyah (b1) toplamı 26'dır. Tüm destedeki toplam kırmızı da 26'dır. Bu denklem her zaman r1+b1 = r1+siyah2 sonucunu verir."
+        }
     }
 ];
