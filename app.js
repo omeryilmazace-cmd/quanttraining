@@ -254,12 +254,6 @@ elements.vizBtn.onclick = () => {
     if (q.id === 'striving') showStrivingViz();
     if (q.id === 'cards2') showCards2Viz();
 
-    // Apply Glitch Effect
-    elements.overlay.querySelector('.overlay-content').classList.add('glitch-effect');
-    setTimeout(() => {
-        elements.overlay.querySelector('.overlay-content').classList.remove('glitch-effect');
-    }, 400);
-
     // Show Hacker Proof if correct previously
     const proofHtml = showHackerProof(q.id);
     if (proofHtml) elements.logicText.innerHTML += proofHtml;
