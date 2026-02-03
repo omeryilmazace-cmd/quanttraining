@@ -238,8 +238,9 @@ elements.vizBtn.onclick = () => {
 // --- Matrix-Optimized Visualization Sub-factories ---
 
 function showAntsViz() {
+    const hint = currentLang === 'tr' ? "Yön değiştirmek için karıncalara tıkla!" : "Click ants to toggle their direction!";
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${hint}</div>
         <div style="position:relative; width:200px; height:200px; margin:auto">
             <div class="ant" id="ant1" style="background:var(--primary); animation: ant1 4s infinite linear; box-shadow: var(--glow);"></div>
             <div class="ant" id="ant2" style="background:var(--primary); animation: ant2 4s infinite linear; opacity:0.7;"></div>
@@ -258,8 +259,9 @@ function showAntsViz() {
 }
 
 function showRopesViz() {
+    const hint = currentLang === 'tr' ? "Uçları yakmak için 🔥 simgelerine tıkla!" : "Click 🔥 to light the rope ends!";
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${hint}</div>
         <div style="display:flex; flex-direction:column; gap:50px; width:85%; margin:auto">
             <div class="rope-container">
                 <div class="rope-bar"></div>
@@ -309,8 +311,9 @@ function showSocksViz() {
 }
 
 function showCardsViz() {
+    const hint = currentLang === 'tr' ? "Kartları açmak için üzerlerine tıkla!" : "Click cards to reveal their value!";
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${hint}</div>
         <div style="display:flex; gap:30px; justify-content:center; align-items:center; width:100%">
             <div class="interactive-card" id="c1">?</div>
             <div style="font-size:1.5rem; color:var(--gold); font-weight:800; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5)">VS</div>
@@ -328,8 +331,9 @@ function showCardsViz() {
 }
 
 function showCoinsViz() {
+    const hint = currentLang === 'tr' ? "10 parayı B'ye taşı (Tıkladığında otomatik ters dönerler!)" : "Move 10 bits to B (They flip automatically on click!)";
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">MATRIX_SHIFT: Transfer 10 bits to Group B</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${hint}</div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; width:100%; max-width:600px">
             <div id="gA" style="border:1px solid var(--primary); background:rgba(0,255,65,0.05); padding:15px; border-radius:4px">
                 <div style="font-size:0.7rem; color:var(--primary); margin-bottom:8px">SECTOR_A (90)</div>
@@ -359,8 +363,9 @@ function showCoinsViz() {
 }
 
 function showClockViz() {
+    const hint = currentLang === 'tr' ? "Akrep sapmasını görmek için saate tıkla!" : "Click clock to see the hour hand shift!";
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:25px; font-size:0.85rem">TIME_CALIBRATION: Analyze offset</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:25px; font-size:0.85rem">${hint}</div>
         <div class="clock-viz" style="margin:auto; border:2px solid var(--primary); box-shadow:var(--glow)" id="clk">
             <div class="hand hour-h" id="hh" style="transform: rotate(90deg); background:white !important;"></div>
             <div class="hand min-h" id="mh" style="transform: rotate(90deg); background:var(--primary) !important;"></div>
