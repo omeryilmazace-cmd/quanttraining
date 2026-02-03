@@ -638,7 +638,8 @@ function showMeetingViz() {
     };
 }
 
-elements.vizTarget.innerHTML = `
+function showNineViz() {
+    elements.vizTarget.innerHTML = `
         <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; color:var(--primary); font-family:monospace; font-size:1rem; padding:20px; border:1px solid var(--primary); background:rgba(0,0,0,0.8)">
             <div>09</div><div>19</div><div>29</div><div>39</div><div>49</div>
             <div>59</div><div>69</div><div>79</div><div>89</div><div style="color:#fff; text-shadow:var(--glow)">90</div>
