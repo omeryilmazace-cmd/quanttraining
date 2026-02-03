@@ -52,13 +52,15 @@ body {
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
+    /* Push Lang to right by default */
     padding: 0 20px;
-    z-index: 60;
+    z-index: 100;
     pointer-events: none;
 }
 
-.top-bar * {
+.top-bar .lang-switcher-top,
+.top-bar .menu-toggle {
     pointer-events: auto;
 }
 
@@ -94,7 +96,8 @@ body {
     background: var(--sidebar);
     border-right: 1px solid var(--primary);
     color: var(--text);
-    padding: 40px 20px;
+    padding: 80px 20px 40px;
+    /* Increased top padding to clear top-bar */
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -690,6 +693,10 @@ h1 {
         left: 0;
     }
 
+    .top-bar {
+        justify-content: space-between;
+    }
+
     .menu-toggle {
         display: block;
         pointer-events: auto;
@@ -697,7 +704,7 @@ h1 {
 
     .main-content {
         padding: 15px;
-        padding-top: 80px;
+        padding-top: 100px;
     }
 
     .card-container {
