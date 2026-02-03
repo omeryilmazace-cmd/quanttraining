@@ -424,6 +424,7 @@ h1 {
     align-items: center;
     position: relative;
     padding: 20px;
+    overflow: hidden;
 }
 
 .logic-box {
@@ -440,6 +441,145 @@ h1 {
     display: inline-block;
     padding-bottom: 2px;
     margin-bottom: 10px;
+}
+
+/* Injected Viz Styles */
+.ant {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+    filter: drop-shadow(0 0 5px var(--primary));
+}
+
+@keyframes ant1 {
+    0% {
+        top: -7px;
+        left: 93px;
+    }
+
+    33.3% {
+        top: 166px;
+        left: 193px;
+    }
+
+    66.6% {
+        top: 166px;
+        left: -7px;
+    }
+
+    100% {
+        top: -7px;
+        left: 93px;
+    }
+}
+
+@keyframes ant2 {
+    0% {
+        top: 166px;
+        left: 193px;
+    }
+
+    33.3% {
+        top: 166px;
+        left: -7px;
+    }
+
+    66.6% {
+        top: -7px;
+        left: 93px;
+    }
+
+    100% {
+        top: 166px;
+        left: 193px;
+    }
+}
+
+@keyframes ant3 {
+    0% {
+        top: 166px;
+        left: -7px;
+    }
+
+    33.3% {
+        top: -7px;
+        left: 93px;
+    }
+
+    66.6% {
+        top: 166px;
+        left: 193px;
+    }
+
+    100% {
+        top: 166px;
+        left: -7px;
+    }
+}
+
+.rope-container {
+    position: relative;
+    width: 100%;
+    height: 12px;
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid var(--text-dim);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.rope-bar {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #000);
+    width: 100%;
+    transform: translateX(-100%);
+}
+
+.flame {
+    position: absolute;
+    top: -22px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 20;
+    filter: grayscale(1);
+    transition: 0.3s;
+}
+
+.flame.active {
+    filter: grayscale(0);
+    color: var(--primary);
+}
+
+.flame.left {
+    left: -10px;
+}
+
+.flame.right {
+    right: -10px;
+}
+
+@keyframes burnFull {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes burnHalf {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
 
 .interactive-card {
@@ -465,9 +605,18 @@ h1 {
     transform: rotateY(360deg);
 }
 
+.coin-grid-viz {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+}
+
 .coin {
-    background: #003300;
-    border: 1px solid #00ff41;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    transition: 0.3s;
 }
 
 .coin.head {
@@ -475,12 +624,53 @@ h1 {
     box-shadow: var(--glow);
 }
 
+.clock-viz {
+    width: 200px;
+    height: 200px;
+    border: 4px solid var(--primary);
+    border-radius: 50%;
+    position: relative;
+    background: rgba(0, 0, 0, 0.8);
+}
+
 .hand {
-    background: var(--primary) !important;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 4px;
+    transition: 1s;
 }
 
 .hour-h {
-    background: white !important;
+    width: 6px;
+    height: 60px;
+    z-index: 2;
+}
+
+.min-h {
+    width: 4px;
+    height: 90px;
+    z-index: 1;
+}
+
+.sock-anim {
+    width: 35px;
+    height: 55px;
+    border-radius: 4px;
+    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bounceIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .hidden {
