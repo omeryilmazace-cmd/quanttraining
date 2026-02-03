@@ -15,7 +15,8 @@ const uiStrings = {
         gameOver: "GAME OVER! Final Score",
         correct: "Correct! +100 XP",
         wrong: "Incorrect. Try visualizing.",
-        streakBonus: "Streak Bonus! +50 XP"
+        streakBonus: "Streak Bonus! +50 XP",
+        vizHint: "Interact with the visualization to see the logic!"
     },
     tr: {
         progress: "Tamamlandı",
@@ -26,7 +27,8 @@ const uiStrings = {
         gameOver: "OYUN BİTTİ! Toplam Skor",
         correct: "Doğru! +100 XP",
         wrong: "Yanlış. Mantığı incele.",
-        streakBonus: "Seri Bonusu! +50 XP"
+        streakBonus: "Seri Bonusu! +50 XP",
+        vizHint: "Mantığı görmek için görsele dokun/tıkla!"
     }
 };
 
@@ -62,7 +64,6 @@ function init() {
         btn.onclick = () => {
             currentLang = btn.dataset.lang;
             elements.langBtns.forEach(b => b.classList.remove('active'));
-            // Sync all lang buttons (top and potentially sidebar)
             document.querySelectorAll(`.lang-btn[data-lang="${currentLang}"]`).forEach(el => el.classList.add('active'));
             updateStaticStrings();
             loadQuestion(currentIdx);
@@ -183,110 +184,179 @@ elements.vizBtn.onclick = () => {
     elements.vizTarget.innerHTML = '';
     elements.overlay.classList.remove('hidden');
 
-    if (q.id === 'cards') showCardsViz();
-    if (q.id === 'coins') showCoinsViz();
-    if (q.id === 'clock') showClockViz();
-    if (q.id === 'dollar') showDollarViz();
+    // Interactive Visualizers
     if (q.id === 'ants') showAntsViz();
     if (q.id === 'ropes') showRopesViz();
     if (q.id === 'socks') showSocksViz();
-    if (q.id === 'children') showChildrenViz();
+    if (q.id === 'cards') showCardsViz();
+    if (q.id === 'coins') showCoinsViz();
+    if (q.id === 'clock') showClockViz();
     if (q.id === 'elevator') showElevatorViz();
+    if (q.id === 'children') showChildrenViz();
+    if (q.id === 'dollar') showDollarViz();
 };
 
 // --- Visualization Sub-factories ---
 
 function showAntsViz() {
     elements.vizTarget.innerHTML = `
-        <div style="position:relative; width:200px; height:200px">
-            <div style="position:absolute; top:0; left:50%; width:10px; height:10px; background:#ef4444; border-radius:50%; transform:translateX(-50%); animation: ant1 2s infinite linear;"></div>
-            <div style="position:absolute; bottom:0; left:0; width:10px; height:10px; background:#10b981; border-radius:50%; animation: ant2 2s infinite linear;"></div>
-            <div style="position:absolute; bottom:0; right:0; width:10px; height:10px; background:#6366f1; border-radius:50%; animation: ant3 2s infinite linear;"></div>
+        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="position:relative; width:200px; height:200px; margin:auto">
+            <div class="ant" id="ant1" style="--dir:1; background:#ef4444; animation: ant1 4s infinite linear;"></div>
+            <div class="ant" id="ant2" style="--dir:1; background:#10b981; animation: ant2 4s infinite linear;"></div>
+            <div class="ant" id="ant3" style="--dir:1; background:#6366f1; animation: ant3 4s infinite linear;"></div>
             <div style="width:0; height:0; border-left:100px solid transparent; border-right:100px solid transparent; border-bottom:173px solid rgba(255,255,255,0.05);"></div>
         </div>
     `;
+    document.querySelectorAll('.ant').forEach(ant => {
+        ant.onclick = () => {
+            const cur = ant.style.animationDirection || 'normal';
+            ant.style.animationDirection = (cur === 'normal' ? 'reverse' : 'normal');
+            ant.style.boxShadow = "0 0 15px white";
+            setTimeout(() => ant.style.boxShadow = "none", 300);
+        };
+    });
 }
 
 function showRopesViz() {
     elements.vizTarget.innerHTML = `
-        <div style="display:flex; flex-direction:column; gap:20px; width:80%">
-            <div style="height:10px; background:#475569; position:relative; border-radius:5px">
-                <div style="position:absolute; left:0; right:50%; height:100%; background:orange; animation: burn 2s forwards"></div>
-                <div style="position:absolute; right:0; left:50%; height:100%; background:orange; animation: burn 2s forwards"></div>
+        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="display:flex; flex-direction:column; gap:40px; width:80%; margin:auto">
+            <div class="rope-container" id="r1">
+                <div class="rope-bar" id="b1"></div>
+                <div class="flame left" id="f1l">🔥</div>
+                <div class="flame right" id="f1r">🔥</div>
             </div>
-            <div style="height:10px; background:#475569; position:relative; border-radius:5px">
-                <div style="position:absolute; left:0; width:0; height:100%; background:orange; animation: burnWait 2s forwards"></div>
+            <div class="rope-container" id="r2">
+                <div class="rope-bar" id="b2"></div>
+                <div class="flame left" id="f2l">🔥</div>
+                <div class="flame right" id="f2r">🔥</div>
             </div>
         </div>
     `;
+    const checkRope = (bar, flames) => {
+        const active = [...flames].filter(f => f.classList.contains('active')).length;
+        if (active === 1) bar.style.animation = "burnFull 4s linear forwards";
+        else if (active === 2) bar.style.animation = "burnHalf 2s linear forwards";
+    };
+    document.querySelectorAll('.flame').forEach(f => {
+        f.onclick = () => {
+            f.classList.add('active');
+            const rope = f.parentElement;
+            checkRope(rope.querySelector('.rope-bar'), rope.querySelectorAll('.flame'));
+        };
+    });
 }
 
 function showSocksViz() {
     elements.vizTarget.innerHTML = `
-        <div style="display:flex; gap:10px">
-            <div style="width:40px; height:60px; background:white; border-radius:5px"></div>
-            <div style="width:40px; height:60px; background:black; border:1px solid white; border-radius:5px"></div>
-            <div style="width:40px; height:60px; background:white; border-radius:5px; border:3px solid #10b981"></div>
-        </div>
+        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">Click the drawer to pull a sock!</div>
+        <div id="drawer" style="width:150px; height:100px; background:#334155; border-radius:10px; margin:auto; cursor:pointer; display:flex; justify-content:center; align-items:center; font-size:2.5rem">🗄️</div>
+        <div id="socksPile" style="display:flex; gap:10px; margin-top:20px; justify-content:center"></div>
     `;
-}
-
-function showChildrenViz() {
-    elements.vizTarget.innerHTML = `
-        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px">
-            <div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
-            <div style="color:pink">G</div><div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
-        </div>
-    `;
-}
-
-function showElevatorViz() {
-    elements.vizTarget.innerHTML = `
-        <div style="width:100px; height:150px; border:2px solid white; position:relative; animation: liftUp 2s infinite">
-            <div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); width:40px; height:10px; background:silver"></div>
-            <div style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); width:20px; height:40px; background:#6366f1"></div>
-        </div>
-    `;
+    let count = 0;
+    const colors = ['white', 'black', 'white'];
+    document.getElementById('drawer').onclick = () => {
+        if (count >= 3) return;
+        const s = document.createElement('div');
+        s.className = 'sock-anim';
+        s.style.background = colors[count];
+        s.style.border = colors[count] === 'white' ? 'none' : '1px solid white';
+        document.getElementById('socksPile').appendChild(s);
+        count++;
+    };
 }
 
 function showCardsViz() {
     elements.vizTarget.innerHTML = `
-        <div class="viz-card" id="vCard1">?</div>
-        <div style="font-size:2rem; color:gold">VS</div>
-        <div class="viz-card" id="vCard2">?</div>
+        <div style="text-align:center; color:#94a3b8; margin-bottom:20px; font-size:0.8rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="display:flex; gap:20px; justify-content:center; align-items:center">
+            <div class="interactive-card" id="c1">?</div>
+            <div style="font-size:1.5rem; color:gold; font-weight:800">VS</div>
+            <div class="interactive-card" id="c2">?</div>
+        </div>
     `;
-    setTimeout(() => {
-        const v1 = Math.floor(Math.random() * 100) + 1;
-        let v2 = Math.floor(Math.random() * 100) + 1;
-        while (v2 == v1) v2 = Math.floor(Math.random() * 100) + 1;
-        document.getElementById('vCard1').innerText = v1;
-        document.getElementById('vCard2').innerText = v2;
-    }, 500);
+    const vals = [Math.floor(Math.random() * 100) + 1, Math.floor(Math.random() * 100) + 1];
+    document.querySelectorAll('.interactive-card').forEach((c, i) => {
+        c.onclick = () => {
+            if (c.classList.contains('revealed')) return;
+            c.innerText = vals[i];
+            c.classList.add('revealed');
+        };
+    });
 }
 
 function showCoinsViz() {
-    elements.vizTarget.innerHTML = '<div class="coin-grid-viz" id="vCoinGrid"></div>';
-    const grid = document.getElementById('vCoinGrid');
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">Click 10 coins to move them to Group B and flip!</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%">
+            <div id="gA" style="border:1px dashed rgba(255,255,255,0.1); padding:10px; border-radius:10px">
+                <div style="font-size:0.6rem; color:#818cf8">A</div>
+                <div class="coin-grid-viz small" id="gridA"></div>
+            </div>
+            <div id="gB" style="border:1px dashed rgba(255,255,255,0.1); padding:10px; border-radius:10px">
+                <div style="font-size:0.6rem; color:#818cf8">B</div>
+                <div class="coin-grid-viz small" id="gridB"></div>
+            </div>
+        </div>
+    `;
+    const gridA = document.getElementById('gridA');
+    const gridB = document.getElementById('gridB');
     for (let i = 0; i < 100; i++) {
-        const div = document.createElement('div');
-        div.className = 'coin' + (i < 10 ? ' head' : '');
-        grid.appendChild(div);
+        const c = document.createElement('div');
+        c.className = 'coin' + (i < 10 ? ' head' : '');
+        c.onclick = () => {
+            if (c.parentElement === gridA && gridB.children.length < 10) {
+                gridB.appendChild(c);
+                c.classList.toggle('head');
+                c.style.transform = 'scale(1.2)';
+            }
+        };
+        gridA.appendChild(c);
     }
-    setTimeout(() => {
-        const coins = document.querySelectorAll('.coin');
-        for (let i = 0; i < 10; i++) {
-            coins[i].classList.toggle('head');
-            coins[i].style.transform = 'scale(1.2)';
-            coins[i].style.border = '2px solid white';
-        }
-    }, 1000);
 }
 
 function showClockViz() {
     elements.vizTarget.innerHTML = `
-        <div class="clock-viz">
-            <div class="hand hour-h" style="transform: rotate(97.5deg)"></div>
-            <div class="hand min-h" style="transform: rotate(90deg)"></div>
+        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">Click to see the offset!</div>
+        <div class="clock-viz" style="margin:auto" id="clk">
+            <div class="hand hour-h" id="hh" style="transform: rotate(90deg)"></div>
+            <div class="hand min-h" id="mh" style="transform: rotate(90deg)"></div>
+        </div>
+    `;
+    document.getElementById('clk').onclick = () => {
+        document.getElementById('hh').style.transform = "rotate(97.5deg)";
+        document.getElementById('mh').style.transform = "rotate(90deg)";
+    };
+}
+
+function showElevatorViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:30px; align-items:center; justify-content:center">
+            <div style="display:flex; flex-direction:column; gap:10px">
+                <button class="btn primary small" id="up">UP</button>
+            </div>
+            <div id="elev" style="width:80px; height:120px; border:3px solid white; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding-bottom:10px; transition: 1s">
+                <div id="scale" style="color:gold; font-size:0.8rem; margin-bottom:5px">70kg</div>
+                <div style="width:30px; height:60px; background:#818cf8; border-radius:5px"></div>
+            </div>
+        </div>
+    `;
+    document.getElementById('up').onclick = () => {
+        document.getElementById('elev').style.transform = "translateY(-50px)";
+        document.getElementById('scale').innerText = "85kg!";
+        setTimeout(() => {
+            document.getElementById('elev').style.transform = "translateY(0)";
+            document.getElementById('scale').innerText = "70kg";
+        }, 1500);
+    };
+}
+
+function showChildrenViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; justify-content:center">
+            <div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
+            <div style="color:pink">G</div><div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
         </div>
     `;
 }
@@ -295,11 +365,10 @@ function showDollarViz() {
     elements.vizTarget.innerHTML = `
         <div style="text-align:center; color:white">
             <div style="background:#10b981; padding:15px; border-radius:10px; margin-bottom:20px">Total Out: $27</div>
-            <div style="display:flex; gap:20px">
+            <div style="display:flex; gap:20px; justify-content:center">
                 <div style="border:1px solid #4f46e5; padding:10px">Hotel: $25</div>
                 <div style="border:1px solid #f59e0b; padding:10px">Boy: $2$</div>
             </div>
-            <p style="margin-top:20px; font-size:0.9rem">25 + 2 = 27. It balances!</p>
         </div>
     `;
 }
