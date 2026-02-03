@@ -251,9 +251,18 @@ elements.vizBtn.onclick = () => {
     if (q.id === 'jellybean') showJellyViz();
     if (q.id === 'speedboat') showSpeedboatViz();
     if (q.id === 'marbles') showMarblesViz();
-    if (q.id === 'rope15') showRope15Viz();
     if (q.id === 'striving') showStrivingViz();
     if (q.id === 'cards2') showCards2Viz();
+
+    // Apply Glitch Effect
+    elements.overlay.querySelector('.overlay-content').classList.add('glitch-effect');
+    setTimeout(() => {
+        elements.overlay.querySelector('.overlay-content').classList.remove('glitch-effect');
+    }, 400);
+
+    // Show Hacker Proof if correct previously
+    const proofHtml = showHackerProof(q.id);
+    if (proofHtml) elements.logicText.innerHTML += proofHtml;
 };
 
 // --- Matrix-Optimized Visualization Sub-factories ---
@@ -606,15 +615,33 @@ function showMeetingViz() {
     `;
 }
 
-function showNineViz() {
-    elements.vizTarget.innerHTML = `
-        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; color:var(--primary); font-family:monospace; font-size:0.8rem">
+elements.vizTarget.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; color:var(--primary); font-family:monospace; font-size:1rem; padding:20px; border:1px solid var(--primary); background:rgba(0,0,0,0.8)">
             <div>09</div><div>19</div><div>29</div><div>39</div><div>49</div>
-            <div>59</div><div>69</div><div>79</div><div>89</div><div style="color:#fff">90</div>
-            <div style="color:#fff">91</div><div style="color:#fff">92</div><div style="color:#fff">93</div><div style="color:#fff">94</div><div style="color:#fff">95</div>
-            <div style="color:#fff">96</div><div style="color:#fff">97</div><div style="color:#fff">98</div><div style="color:#fff">99(2)</div><div style="color:var(--gold)">= 20</div>
+            <div>59</div><div>69</div><div>79</div><div>89</div><div style="color:#fff; text-shadow:var(--glow)">90</div>
+            <div style="color:#fff; text-shadow:var(--glow)">91</div><div style="color:#fff; text-shadow:var(--glow)">92</div><div style="color:#fff; text-shadow:var(--glow)">93</div><div style="color:#fff; text-shadow:var(--glow)">94</div><div style="color:#fff; text-shadow:var(--glow)">95</div>
+            <div style="color:#fff; text-shadow:var(--glow)">96</div><div style="color:#fff; text-shadow:var(--glow)">97</div><div style="color:#fff; text-shadow:var(--glow)">98</div><div style="color:#fff; text-shadow:var(--glow)">99(2)</div><div style="color:var(--gold)">= 20</div>
         </div>
+        <div style="margin-top:20px; color:var(--primary); font-size:0.8rem; text-align:center">9 appears twice in 99!</div>
     `;
+}
+
+function showHackerProof(id) {
+    const proofs = {
+        'ants': `def solve():\n  # Monte Carlo Simulation\n  paths = [(a,b,c) for a in [0,1] for b in [0,1] for c in [0,1]]\n  valid = [p for p in paths if len(set(p)) == 1]\n  return len(valid)/len(paths) # 2/8 = 0.25`,
+        'monty': `def solve():\n  # Winning by switching\n  wins = sum(1 for _ in range(1000) if random.choice([0,0,1]) == 0)\n  return wins/1000 # ~0.666`,
+        'clock': `def solve():\n  # 3:15 angle\n  m_angle = 15 * 6\n  h_angle = (3 * 30) + (15 * 0.5)\n  return abs(h_angle - m_angle) # 7.5 deg`,
+        'birthday': `def solve():\n  # 1 - (365! / (365-n)! * 365^n)\n  prob = 1.0\n  for i in range(23):\n    prob *= (365-i)/365\n  return 1 - prob # 0.507`,
+        'poison': `# Binary search analogy\n# 2^10 = 1024 > 1000\nbottle_id = int(''.join(['1' if died else '0' for prisoner in prisoners]), 2)`,
+        'lilypad': `# Exponential reverse\n# P(t) = P(0) * 2^t\n# If P(48) = 1, then P(47) = 1/2`,
+        'airplane': `def simulate():\n  # 100th seat is either Seat 1 or Seat 100\n  # Equi-probable events via symmetry\n  return 0.5`,
+        'stick': `import random\ndef sim():\n  x, y = sorted([random.random() for _ in range(2)])\n  a, b, c = x, y-x, 1-y\n  return a+b>c and a+c>b and b+c>a # Prob = 0.25`
+    };
+
+    if (proofs[id]) {
+        return `<div class="hacker-proof"><code>${proofs[id].replace(/\n/g, '<br>')}</code></div>`;
+    }
+    return '';
 }
 
 function showStickViz() {
