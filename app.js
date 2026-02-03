@@ -35,10 +35,11 @@ const uiStrings = {
 const elements = {
     nav: document.getElementById('questionNav'),
     title: document.getElementById('questionTitle'),
-    desc: document.getElementById('questionDesc'), // This was 'desc' in original, changed to 'question' in loadQuestion, keeping 'desc' here as per original and adding 'question' in loadQuestion.
+    desc: document.getElementById('questionDesc'),
     grid: document.getElementById('optionsGrid'),
     checkBtn: document.getElementById('checkBtn'),
-    feedback: document.getElementById('feedbackText'), // Added
+    feedback: document.querySelector('.feedback-text'),
+    status: document.querySelector('.status-icon'),
     vizBtn: document.getElementById('visualizeBtn'),
     nextBtn: document.getElementById('nextBtn'),
     badge: document.getElementById('categoryBadge'),
@@ -53,8 +54,9 @@ const elements = {
     xpValue: document.getElementById('xpValue'),
     streakValue: document.getElementById('streakValue'),
     feedbackArea: document.getElementById('feedbackArea'),
-    hintBtn: document.getElementById('hintBtn'), // Added
-    hintText: document.getElementById('hintText') // Added
+    hintBtn: document.getElementById('hintBtn'),
+    hintText: document.getElementById('hintText'),
+    closeViz: document.querySelector('.close-overlay')
 };
 
 function init() {
@@ -142,10 +144,10 @@ function renderNav() {
 function loadQuestion(idx) {
     const q = questions[idx];
     elements.title.innerText = q.title[currentLang];
-    elements.desc.innerText = q.question[currentLang]; // Kept original 'desc'
-    elements.hintText.innerText = q.hint[currentLang]; // Added
-    elements.hintText.classList.add('hidden'); // Added
-    elements.badge.innerText = q.category[currentLang]; // Restored original line
+    elements.desc.innerText = q.question[currentLang];
+    elements.hintText.innerText = q.hint[currentLang];
+    elements.hintText.classList.add('hidden');
+    elements.badge.innerText = q.category[currentLang];
     elements.grid.innerHTML = '';
     elements.feedbackArea.classList.add('hidden');
 
@@ -172,12 +174,12 @@ function toggleHint() {
 }
 
 function updateUI(idx) {
-    elements.feedback.innerText = ''; // Added
-    elements.nextBtn.classList.add('hidden'); // Added
-    elements.vizBtn.classList.add('hidden'); // Added
-    elements.hintBtn.classList.remove('hidden'); // Added
-    elements.hintText.classList.add('hidden'); // Added
-    elements.status.style.display = 'none'; // Added (Note: elements.status is not defined in the provided elements object)
+    elements.feedback.innerText = '';
+    elements.nextBtn.classList.add('hidden');
+    elements.vizBtn.classList.add('hidden');
+    elements.hintBtn.classList.remove('hidden');
+    elements.hintText.classList.add('hidden');
+    elements.status.style.display = 'none';
 
     if (results[idx] !== null) {
         elements.checkBtn.classList.add('hidden');
@@ -205,23 +207,29 @@ elements.checkBtn.onclick = () => {
     results[currentIdx] = selectedIdx;
 
     elements.feedbackArea.classList.remove('hidden');
-    const statusIcon = elements.feedbackArea.querySelector('.status-icon');
-    const feedbackText = elements.feedbackArea.querySelector('.feedback-text');
+    // The elements.status and elements.feedback are now directly referenced from the elements map
+    // as they were updated in init() to point to the correct elements within feedbackArea.
 
-    if (selectedIdx === q.correct) {
+    const isCorrect = (selectedIdx === q.correct);
+
+    if (isCorrect) {
         selected.classList.add('correct');
         solvedCount++;
         xp += 100;
         streak++;
         if (streak > 2) xp += 50;
-        statusIcon.innerText = "✅";
-        feedbackText.innerText = uiStrings[currentLang].correct + (streak > 2 ? ` (+50 ${uiStrings[currentLang].streakBonus})` : "");
+        results[currentIdx] = selectedIdx; // Store the selected index
+        elements.status.innerText = "✅";
+        elements.status.style.display = 'block';
+        elements.feedback.innerText = uiStrings[currentLang].correct + (streak > 2 ? ` (+50 ${uiStrings[currentLang].streakBonus})` : "");
     } else {
         selected.classList.add('wrong');
         elements.grid.children[q.correct].classList.add('correct');
         streak = 0;
-        statusIcon.innerText = "❌";
-        feedbackText.innerText = uiStrings[currentLang].wrong;
+        results[currentIdx] = selectedIdx; // Store the selected index
+        elements.status.innerText = "❌";
+        elements.status.style.display = 'block';
+        elements.feedback.innerText = uiStrings[currentLang].wrong;
     }
 
     renderNav();
