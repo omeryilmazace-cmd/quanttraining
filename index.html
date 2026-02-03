@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantLAB | Interview Prep</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand">Quant<span>LAB</span></div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill" class="fill"></div>
+                </div>
+                <span id="progressText">0/4 Completed</span>
+            </div>
+            <nav id="questionNav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <div id="quizSection" class="card-container">
+                <div class="badge" id="categoryBadge">Probability</div>
+                <h1 id="questionTitle">Loading...</h1>
+                <p class="question-text" id="questionDesc"></p>
+
+                <div class="options-grid" id="optionsGrid"></div>
+
+                <div class="feedback hidden" id="feedbackArea">
+                    <div class="status-icon"></div>
+                    <div class="feedback-text"></div>
+                </div>
+
+                <div class="action-bar">
+                    <button id="checkBtn" class="btn primary disabled">Check Answer</button>
+                    <button id="visualizeBtn" class="btn secondary hidden">Visualize Logic 👁️</button>
+                    <button id="nextBtn" class="btn outline hidden">Next Question →</button>
+                </div>
+            </div>
+
+            <!-- Visualization Overlay -->
+            <div id="vizOverlay" class="overlay hidden">
+                <div class="overlay-content">
+                    <button class="close-overlay">×</button>
+                    <div id="vizTarget" class="viz-canvas"></div>
+                    <div class="logic-box">
+                        <h3>The Secret Behind It</h3>
+                        <p id="logicText"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
