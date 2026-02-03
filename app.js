@@ -835,32 +835,44 @@ function showSwitchesViz() {
 
 function showMontyViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:15px">PICK A DOOR</div>
-        <div style="display:flex; gap:15px; justify-content:center">
-            <div class="monty-door" id="d1">1</div>
-            <div class="monty-door" id="d2">2</div>
-            <div class="monty-door" id="d3">3</div>
+        <div style="display:flex; gap:10px; justify-content:center; margin-bottom:20px">
+            <div class="interactive-card" id="door1" style="font-size:1.5rem">1</div>
+            <div class="interactive-card" id="door2" style="font-size:1.5rem">2</div>
+            <div class="interactive-card" id="door3" style="font-size:1.5rem">3</div>
         </div>
-        <div id="montyAdvice" style="margin-top:20px; color:var(--gold); text-align:center; min-height:24px"></div>
+        <div id="montyLog" style="color:var(--gold); font-size:0.75rem; text-align:center; min-height:40px">
+            Pick a door to start simulation!
+        </div>
+        <button class="btn secondary small" id="runMontySim" style="margin-top:15px; width:100%; font-size:0.75rem">RUN 1000x SIMULATION</button>
+        <div id="simResults" style="display:none; margin-top:10px; font-size:0.8rem; color:var(--primary); font-family:monospace; text-align:center">
+            STAY WIN: 0% | SWITCH WIN: 0%
+        </div>
     `;
-    const carIdx = Math.floor(Math.random() * 3);
-    const doors = document.querySelectorAll('.monty-door');
-    let picked = -1;
 
-    doors.forEach((d, i) => {
-        d.onclick = () => {
-            if (picked !== -1) return;
-            picked = i;
-            d.style.borderColor = "var(--primary)";
-            d.style.boxShadow = "var(--glow)";
+    const log = document.getElementById('montyLog');
+    const simBtn = document.getElementById('runMontySim');
+    const simRes = document.getElementById('simResults');
 
-            // Host opens a goat door
-            let hostIdx = [0, 1, 2].find(idx => idx !== carIdx && idx !== picked);
-            setTimeout(() => {
-                doors[hostIdx].innerText = "🐐";
-                doors[hostIdx].style.opacity = "0.5";
-                document.getElementById('montyAdvice').innerText = currentLang === 'tr' ? "Sunucu keçiyi açtı! Değiştirmek daha mantıklı..." : "Host opened a goat! Switching is statistically better...";
-            }, 800);
+    simBtn.onclick = () => {
+        let stayWins = 0;
+        let switchWins = 0;
+        const total = 1000;
+        for (let i = 0; i < total; i++) {
+            const car = Math.floor(Math.random() * 3);
+            const pick = Math.floor(Math.random() * 3);
+            if (pick === car) stayWins++;
+            else switchWins++;
+        }
+        simRes.style.display = 'block';
+        simRes.innerHTML = `SIM RESULT (1000 Games):<br>STAY WIN: ${(stayWins / total * 100).toFixed(1)}% | SWITCH WIN: ${(switchWins / total * 100).toFixed(1)}%`;
+        log.innerText = "Data proves: Switching doubles your odds!";
+    };
+
+    document.querySelectorAll('.interactive-card').forEach((card, idx) => {
+        card.onclick = () => {
+            if (card.classList.contains('revealed')) return;
+            card.classList.add('revealed');
+            log.innerText = `You picked Door ${idx + 1}. Host opens a goat... Now SWITCH!`;
         };
     });
 }
@@ -887,15 +899,31 @@ function showEggsViz() {
 
 function showPoisonViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:var(--primary); margin-bottom:15px">BINARY DECODING</div>
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; justify-content:center">
-            ${[...Array(10)].map((_, i) => `<div class="prisoner" id="p${i}" style="width:30px; height:40px; border:1px solid var(--primary); display:flex; align-items:center; justify-content:center; font-size:0.6rem">P${i}</div>`).join('')}
+        <div style="text-align:center; margin-bottom:15px; color:var(--primary); font-size:0.75rem">1000 bottles → 10 bits (2¹⁰ = 1024)</div>
+        <div id="bitGrid" style="display:flex; gap:4px; justify-content:center; margin-bottom:15px">
+            ${Array(10).fill().map((_, i) => `<div class="coin" id="bit${9 - i}" style="width:18px; height:18px; border-radius:2px; font-size:0.6rem; display:flex; align-items:center; justify-content:center; color:#000; font-weight:900">0</div>`).join('')}
         </div>
-        <div style="margin-top:20px; font-family:monospace; color:var(--gold); font-size:0.8rem; text-align:center">
-            Bottle #542 = <span style="color:#fff">1000011110</span><br>
-            Prisoners 1, 2, 3, 4, 9 would drink.
+        <div style="text-align:center">
+            <input type="number" id="bottleInput" min="1" max="1000" placeholder="Bottle #" style="background:#000; border:1px solid var(--primary); color:var(--primary); padding:8px; width:120px; text-align:center; font-family:monospace; font-size:1rem; outline:none">
         </div>
+        <div id="bitPattern" style="margin-top:15px; color:var(--gold); font-family:monospace; font-size:0.85rem; text-align:center">BIT PATTERN: 0000000000</div>
     `;
+
+    const input = document.getElementById('bottleInput');
+    const bits = document.getElementById('bitPattern');
+
+    input.oninput = () => {
+        const val = parseInt(input.value) || 0;
+        const binary = val.toString(2).padStart(10, '0');
+        bits.innerText = `BIT PATTERN: ${binary}`;
+        binary.split('').forEach((bit, i) => {
+            const el = document.getElementById(`bit${9 - i}`);
+            el.innerText = bit;
+            el.style.background = bit === '1' ? 'var(--primary)' : '#333';
+            el.style.boxShadow = bit === '1' ? 'var(--glow)' : 'none';
+            el.style.color = bit === '1' ? 'black' : 'var(--text-dim)';
+        });
+    };
 }
 
 function showGoldViz() {
