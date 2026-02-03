@@ -235,41 +235,41 @@ elements.vizBtn.onclick = () => {
     if (q.id === 'dollar') showDollarViz();
 };
 
-// --- Visualization Sub-factories ---
+// --- Matrix-Optimized Visualization Sub-factories ---
 
 function showAntsViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${uiStrings[currentLang].vizHint}</div>
         <div style="position:relative; width:200px; height:200px; margin:auto">
-            <div class="ant" id="ant1" style="--dir:1; background:#ef4444; animation: ant1 4s infinite linear;"></div>
-            <div class="ant" id="ant2" style="--dir:1; background:#10b981; animation: ant2 4s infinite linear;"></div>
-            <div class="ant" id="ant3" style="--dir:1; background:#6366f1; animation: ant3 4s infinite linear;"></div>
-            <div style="width:0; height:0; border-left:100px solid transparent; border-right:100px solid transparent; border-bottom:173px solid rgba(255,255,255,0.05);"></div>
+            <div class="ant" id="ant1" style="background:var(--primary); animation: ant1 4s infinite linear; box-shadow: var(--glow);"></div>
+            <div class="ant" id="ant2" style="background:var(--primary); animation: ant2 4s infinite linear; opacity:0.7;"></div>
+            <div class="ant" id="ant3" style="background:var(--primary); animation: ant3 4s infinite linear; opacity:0.4;"></div>
+            <div style="width:0; height:0; border-left:100px solid transparent; border-right:100px solid transparent; border-bottom:173px solid rgba(0, 255, 65, 0.1);"></div>
         </div>
     `;
     document.querySelectorAll('.ant').forEach(ant => {
         ant.onclick = () => {
             const cur = ant.style.animationDirection || 'normal';
             ant.style.animationDirection = (cur === 'normal' ? 'reverse' : 'normal');
-            ant.style.boxShadow = "0 0 15px white";
-            setTimeout(() => ant.style.boxShadow = "none", 300);
+            ant.style.boxShadow = "0 0 20px #fff";
+            setTimeout(() => ant.style.boxShadow = "var(--glow)", 300);
         };
     });
 }
 
 function showRopesViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">${uiStrings[currentLang].vizHint}</div>
-        <div style="display:flex; flex-direction:column; gap:40px; width:80%; margin:auto">
-            <div class="rope-container" id="r1">
-                <div class="rope-bar" id="b1"></div>
-                <div class="flame left" id="f1l">🔥</div>
-                <div class="flame right" id="f1r">🔥</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="display:flex; flex-direction:column; gap:50px; width:85%; margin:auto">
+            <div class="rope-container">
+                <div class="rope-bar"></div>
+                <div class="flame left">🔥</div>
+                <div class="flame right">🔥</div>
             </div>
-            <div class="rope-container" id="r2">
-                <div class="rope-bar" id="b2"></div>
-                <div class="flame left" id="f2l">🔥</div>
-                <div class="flame right" id="f2r">🔥</div>
+            <div class="rope-container">
+                <div class="rope-bar"></div>
+                <div class="flame left">🔥</div>
+                <div class="flame right">🔥</div>
             </div>
         </div>
     `;
@@ -281,6 +281,7 @@ function showRopesViz() {
     document.querySelectorAll('.flame').forEach(f => {
         f.onclick = () => {
             f.classList.add('active');
+            f.style.color = "var(--primary)";
             const rope = f.parentElement;
             checkRope(rope.querySelector('.rope-bar'), rope.querySelectorAll('.flame'));
         };
@@ -289,18 +290,19 @@ function showRopesViz() {
 
 function showSocksViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">Click the drawer to pull a sock!</div>
-        <div id="drawer" style="width:150px; height:100px; background:#334155; border-radius:10px; margin:auto; cursor:pointer; display:flex; justify-content:center; align-items:center; font-size:2.5rem">🗄️</div>
-        <div id="socksPile" style="display:flex; gap:10px; margin-top:20px; justify-content:center"></div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:25px; font-size:0.85rem">SYSTEM ACCESS: Click 🗄️ to retrieve data</div>
+        <div id="drawer" style="width:140px; height:90px; border:1px solid var(--primary); background:rgba(0, 255, 65, 0.1); margin:auto; cursor:pointer; display:flex; justify-content:center; align-items:center; font-size:2.5rem; box-shadow:var(--glow);">🗄️</div>
+        <div id="socksPile" style="display:flex; gap:15px; margin-top:30px; justify-content:center; min-height:60px"></div>
     `;
     let count = 0;
-    const colors = ['white', 'black', 'white'];
+    const colors = ['#fff', '#000', '#fff']; // Data bits: 1, 0, 1
     document.getElementById('drawer').onclick = () => {
         if (count >= 3) return;
         const s = document.createElement('div');
         s.className = 'sock-anim';
         s.style.background = colors[count];
-        s.style.border = colors[count] === 'white' ? 'none' : '1px solid white';
+        s.style.border = "1px solid var(--primary)";
+        if (colors[count] === '#fff') s.style.boxShadow = "var(--glow)";
         document.getElementById('socksPile').appendChild(s);
         count++;
     };
@@ -327,14 +329,14 @@ function showCardsViz() {
 
 function showCoinsViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">Click 10 coins to move them to Group B and flip!</div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; width:100%">
-            <div id="gA" style="border:1px dashed rgba(255,255,255,0.1); padding:10px; border-radius:10px">
-                <div style="font-size:0.6rem; color:#818cf8">A</div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">MATRIX_SHIFT: Transfer 10 bits to Group B</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; width:100%; max-width:600px">
+            <div id="gA" style="border:1px solid var(--primary); background:rgba(0,255,65,0.05); padding:15px; border-radius:4px">
+                <div style="font-size:0.7rem; color:var(--primary); margin-bottom:8px">SECTOR_A (90)</div>
                 <div class="coin-grid-viz small" id="gridA"></div>
             </div>
-            <div id="gB" style="border:1px dashed rgba(255,255,255,0.1); padding:10px; border-radius:10px">
-                <div style="font-size:0.6rem; color:#818cf8">B</div>
+            <div id="gB" style="border:1px solid var(--primary); background:rgba(0,255,65,0.05); padding:15px; border-radius:4px">
+                <div style="font-size:0.7rem; color:var(--primary); margin-bottom:8px">SECTOR_B (10)</div>
                 <div class="coin-grid-viz small" id="gridB"></div>
             </div>
         </div>
@@ -344,11 +346,12 @@ function showCoinsViz() {
     for (let i = 0; i < 100; i++) {
         const c = document.createElement('div');
         c.className = 'coin' + (i < 10 ? ' head' : '');
+        c.style.cursor = "pointer";
         c.onclick = () => {
             if (c.parentElement === gridA && gridB.children.length < 10) {
                 gridB.appendChild(c);
                 c.classList.toggle('head');
-                c.style.transform = 'scale(1.2)';
+                c.style.filter = "hue-rotate(90deg)";
             }
         };
         gridA.appendChild(c);
@@ -357,57 +360,59 @@ function showCoinsViz() {
 
 function showClockViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:#94a3b8; margin-bottom:15px; font-size:0.8rem">Click to see the offset!</div>
-        <div class="clock-viz" style="margin:auto" id="clk">
-            <div class="hand hour-h" id="hh" style="transform: rotate(90deg)"></div>
-            <div class="hand min-h" id="mh" style="transform: rotate(90deg)"></div>
+        <div style="text-align:center; color:var(--primary); margin-bottom:25px; font-size:0.85rem">TIME_CALIBRATION: Analyze offset</div>
+        <div class="clock-viz" style="margin:auto; border:2px solid var(--primary); box-shadow:var(--glow)" id="clk">
+            <div class="hand hour-h" id="hh" style="transform: rotate(90deg); background:white !important;"></div>
+            <div class="hand min-h" id="mh" style="transform: rotate(90deg); background:var(--primary) !important;"></div>
         </div>
     `;
     document.getElementById('clk').onclick = () => {
         document.getElementById('hh').style.transform = "rotate(97.5deg)";
         document.getElementById('mh').style.transform = "rotate(90deg)";
+        document.getElementById('hh').style.boxShadow = "0 0 10px #fff";
     };
 }
 
 function showElevatorViz() {
     elements.vizTarget.innerHTML = `
-        <div style="display:flex; gap:30px; align-items:center; justify-content:center">
-            <div style="display:flex; flex-direction:column; gap:10px">
-                <button class="btn primary small" id="up">UP</button>
-            </div>
-            <div id="elev" style="width:80px; height:120px; border:3px solid white; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding-bottom:10px; transition: 1s">
-                <div id="scale" style="color:gold; font-size:0.8rem; margin-bottom:5px">70kg</div>
-                <div style="width:30px; height:60px; background:#818cf8; border-radius:5px"></div>
+        <div style="display:flex; gap:40px; align-items:center; justify-content:center">
+            <button class="btn primary small" id="up" style="max-width:80px">RUN</button>
+            <div id="elev" style="width:80px; height:130px; border:2px solid var(--primary); display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding-bottom:15px; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); background:rgba(0,255,65,0.05);">
+                <div id="scale" style="color:var(--gold); font-size:0.9rem; margin-bottom:10px; font-weight:900">70KG</div>
+                <div style="width:30px; height:60px; background:var(--primary); border-radius:2px; box-shadow:var(--glow)"></div>
             </div>
         </div>
     `;
     document.getElementById('up').onclick = () => {
-        document.getElementById('elev').style.transform = "translateY(-50px)";
-        document.getElementById('scale').innerText = "85kg!";
+        document.getElementById('elev').style.transform = "translateY(-60px)";
+        document.getElementById('scale').innerText = "85KG!";
+        document.getElementById('scale').style.color = "var(--error)";
         setTimeout(() => {
             document.getElementById('elev').style.transform = "translateY(0)";
-            document.getElementById('scale').innerText = "70kg";
-        }, 1500);
+            document.getElementById('scale').innerText = "70KG";
+            document.getElementById('scale').style.color = "var(--gold)";
+        }, 1800);
     };
 }
 
 function showChildrenViz() {
     elements.vizTarget.innerHTML = `
-        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; justify-content:center">
-            <div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
-            <div style="color:pink">G</div><div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
+        <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:15px; justify-content:center; color:var(--primary); font-weight:900; background:rgba(0,255,65,0.05); padding:20px; border:1px solid var(--primary);">
+            <div style="color:#fff; text-shadow:var(--glow)">1:G</div><div style="color:var(--primary)">0:B</div><div style="color:var(--primary)">0:B</div><div style="color:#fff; text-shadow:var(--glow)">1:G</div><div style="color:var(--primary)">0:B</div>
+            <div style="color:#fff; text-shadow:var(--glow)">1:G</div><div style="color:#fff; text-shadow:var(--glow)">1:G</div><div style="color:var(--primary)">0:B</div><div style="color:#fff; text-shadow:var(--glow)">1:G</div><div style="color:var(--primary)">0:B</div>
         </div>
     `;
 }
 
 function showDollarViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:white">
-            <div style="background:#10b981; padding:15px; border-radius:10px; margin-bottom:20px">Total Out: $27</div>
-            <div style="display:flex; gap:20px; justify-content:center">
-                <div style="border:1px solid #4f46e5; padding:10px">Hotel: $25</div>
-                <div style="border:1px solid #f59e0b; padding:10px">Boy: $2$</div>
+        <div style="text-align:center; color:var(--primary)">
+            <div style="background:rgba(0,255,65,0.1); padding:20px; border:1px solid var(--primary); margin-bottom:20px; box-shadow:var(--glow)">TOTAL_LOG: $27 RECOVERED</div>
+            <div style="display:flex; gap:25px; justify-content:center">
+                <div style="border:1px solid var(--primary); padding:12px; background:#000">SERVER: $25</div>
+                <div style="border:1px solid var(--gold); padding:12px; background:#000; color:var(--gold)">LEAK: $2</div>
             </div>
+            <p style="margin-top:20px; font-size:0.8rem; font-family:monospace">25 + 2 = 27. LOGS BALANCED.</p>
         </div>
     `;
 }
