@@ -220,8 +220,8 @@ const questions = [
         category: { en: "Optimization", tr: "Optimizasyon" },
         title: { en: "Two Eggs", tr: "İki Yumurta" },
         question: {
-            en: "With 2 eggs and a 100-story building, find the highest floor an egg can drop from without breaking in MINIMUM drops.",
-            tr: "2 yumurta ve 100 katlı bir bina ile, bir yumurtanın kırılmadan atılabileceği en yüksek katı EN AZ denemeyle nasıl bulursunuz?"
+            en: "You have 2 eggs and a 100-story building. You want to find the lowest floor that breaks an egg. What is the MINIMUM number of drops needed to GUARANTEE you find this floor in the worst-case scenario?",
+            tr: "Elinizde 2 yumurta ve 100 katlı bir bina var. Bir yumurtanın kırılacağı en düşük katı bulmak istiyorsunuz. En kötü senaryoda bu katı bulmayı GARANTİLEMEK için gereken EN AZ deneme sayısı kaçtır?"
         },
         options: {
             en: ["10", "14", "50", "25", "9", "20"],
@@ -229,8 +229,8 @@ const questions = [
         },
         correct: 1,
         logic: {
-            en: "Using the formula x+(x-1)+(x-2)...+1 >= 100, we find x=14. You drop from floors 14, 27, 39, etc. to minimize the worst-case scenario.",
-            tr: "x+(x-1)+(x-2)...+1 >= 100 formülünden x=14 bulunur. En kötü durumu minimize etmek için 14, 27, 39. katlar şeklinde ilerlenir."
+            en: "To minimize the total drops, we want a 'balanced' strategy where the sum of drops with the 1st egg and the sequential drops with the 2nd egg is constant. This leads to the triangular number formula: x + (x-1) + (x-2)... + 1 >= 100. Solving for x gives 14. You first drop from floor 14, then 27 (14+13), then 39 (27+12), etc.",
+            tr: "Toplam deneme sayısını minimize etmek için 'dengeli' bir strateji isteriz: 1. yumurtayla yapılan 'atlama' mesafesi azaldıkça, 2. yumurtayla yapılacak ardışık deneme payı artar. Bu bizi x + (x-1) + (x-2)... + 1 >= 100 formülüne götürür. x buradan 14 çıkar. İlk olarak 14. kattan, sonra 27 (14+13), sonra 39 (27+12). kattan atarak ilerlersiniz."
         }
     },
     {
