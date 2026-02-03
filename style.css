@@ -702,6 +702,61 @@ h1 {
 }
 
 
+
+/* Hint System */
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.hint-btn {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-weight: bold;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.hint-btn:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: var(--glow);
+}
+
+.hint-box {
+    background: rgba(0, 255, 65, 0.05);
+    border: 1px dashed var(--primary);
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--gold);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Mobile */
 @media (max-width: 900px) {
     .sidebar {

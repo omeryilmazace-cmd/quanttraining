@@ -36,9 +36,13 @@
 
         <main class="main-content">
             <div id="quizSection" class="card-container">
-                <div class="badge" id="categoryBadge">Probability</div>
-                <h1 id="questionTitle">Loading...</h1>
-                <p class="question-text" id="questionDesc"></p>
+                <div class="question-header">
+                    <span id="categoryBadge" class="badge">Category</span>
+                    <button id="hintBtn" class="hint-btn" title="Need a hint?">?</button>
+                </div>
+                <h2 id="questionTitle">Loading Question...</h2>
+                <p id="questionDesc">Please wait...</p>
+                <div id="hintText" class="hint-box hidden"></div>
 
                 <div class="options-grid" id="optionsGrid"></div>
 

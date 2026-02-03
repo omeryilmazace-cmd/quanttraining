@@ -15,6 +15,10 @@ const questions = [
         logic: {
             en: "Since the cards are unique, there are only two possibilities: A > B or B > A. Because the process is random and symmetric, both have the same 50% chance.",
             tr: "Numaralar farklı olduğu için sadece iki ihtimal var: A > B veya B > A. Süreç rastgele ve simetrik olduğu için her iki durumun da şansı %50'dir."
+        },
+        hint: {
+            en: "Consider the symmetry between the two cards.",
+            tr: "İki kart arasındaki simetriyi düşünün."
         }
     },
     {
@@ -33,6 +37,10 @@ const questions = [
         logic: {
             en: "Each ant can choose two directions independently (Clockwise or Counter-clockwise). In total there are 2x2x2 = 8 possible movement combinations. The ants only avoid collision if they ALL go CW or ALL go CCW. That's 2 paths out of 8, so 2/8 = 1/4.",
             tr: "Her karınca bağımsız olarak iki yön seçebilir (Saat yönü veya tersi). Toplamda 2x2x2 = 8 farklı hareket kombinasyonu vardır. Karıncalar sadece HEPSİ aynı yöne giderse çarpışmazlar. Bu 8'de 2 ihtimaldir, yani 1/4."
+        },
+        hint: {
+            en: "There are 2 directions and 3 ants, meaning 8 total states.",
+            tr: "2 yön ve 3 karınca var, yani toplam 8 durum mümkün."
         }
     },
     {
@@ -51,6 +59,10 @@ const questions = [
         logic: {
             en: "If you take 10 coins (x heads) and flip them, they become 10-x heads. This exactly matches the remaining 10-x heads in the group of 90.",
             tr: "Eğer 10 parayı (x tanesi tura olan) alıp ters çevirirseniz, o turalar yazıya dönüşür ve sonuçta 10-x tane tura elde edersiniz. Bu sayı, diğer 90'lık grupta kalan tura sayısıyla tam olarak eşleşir."
+        },
+        hint: {
+            en: "What happens to the 'heads' count when you flip a group of 10 coins?",
+            tr: "10 parayı ters çevirdiğinizde 'tura' sayısına ne olur?"
         }
     },
     {
@@ -69,6 +81,10 @@ const questions = [
         logic: {
             en: "Light Rope 1 from both ends and Rope 2 from one end. When Rope 1 finishes (30 mins), light the other end of Rope 2. Rope 2 will have 30 mins left, lighting the other end makes it 15 mins. Total: 30+15=45.",
             tr: "1. ipi iki ucundan, 2. ipi tek ucundan yakın. 1. ip bittiğinde (30 dk), 2. ipin diğer ucunu da yakın. 2. ipin kalan 30 dakikası 15 dakikaya iner. Toplam: 30+15=45."
+        },
+        hint: {
+            en: "Combine lighting both ends to cut the burn time in half.",
+            tr: "Yanma süresini yarıya indirmek için her iki ucu da yakmayı kullanın."
         }
     },
     {
@@ -87,6 +103,10 @@ const questions = [
         logic: {
             en: "At 15 minutes, the minute hand is at 90°. The hour hand moves 0.5° per minute. In 15 minutes, it moves 7.5° away from the 3:00 marker.",
             tr: "Yelkovan 15. dakikada (90 derecede) durur. Akrep ise dakikada 0.5 derece ilerler. 15 dakikada 3.00 noktasından 7.5 derece uzaklaşmış olur."
+        },
+        hint: {
+            en: "The hour hand moves slowly even while the minute hand is at 15.",
+            tr: "Yelkovan 15'teyken bile akrep yavaşça hareket eder."
         }
     },
     {
@@ -103,8 +123,12 @@ const questions = [
         },
         correct: 1,
         logic: {
-            en: "By the Pigeonhole Principle, if you have 2 categories (socks) and draw 3 items, at least 2 must belong to the same category.",
-            tr: "Güvercin Yuvası İlkesi'ne göre, 2 kategoriniz (siyah ve beyaz) varsa ve 3 nesne çekerseniz, en az 2 tanesi aynı kategoriye ait olmak zorundadır."
+            en: "In the worst case, you draw one black and one white. The third draw MUST match one of the first two.",
+            tr: "En kötü ihtimalle bir siyah ve bir beyaz çekersiniz. Üçüncü çekişiniz mutlaka ilk ikisinden biriyel eşleşecektir."
+        },
+        hint: {
+            en: "Think about the maximum number of different colors you can pull.",
+            tr: "Çekebileceğiniz maksimum farklı renk sayısını düşünün."
         }
     },
     {
@@ -123,6 +147,10 @@ const questions = [
         logic: {
             en: "Each birth is an independent 50/50 event. Even with the stopping rule, every single baby born in the country has a 50% chance of being a boy or a girl. The ratio remains 1:1.",
             tr: "Her doğum bağımsız bir %50/%50 olayıdır. Durma kuralı olsa bile, doğan her bebeğin kız veya erkek olma şansı %50'dir. Toplam oran 1:1 kalır."
+        },
+        hint: {
+            en: "Does a stopping rule change the probability of a single birth?",
+            tr: "Durma kuralı tek bir doğumun olasılığını değiştirir mi?"
         }
     },
     {
@@ -139,8 +167,12 @@ const questions = [
         },
         correct: 1,
         logic: {
-            en: "The $27 paid already includes the $2 tip. 27 (total paid) = 25 (hotel) + 2 (boy). Adding 27 and 2 is mathematically meaningless.",
-            tr: "Ödenen 27 dolar zaten çırağın 2 dolarlık bahşişini içerir. 27 (ödenen) = 25 (otel) + 2 (çırak). 27 ile 2'yi toplamak matematiksel olarak anlamsızdır."
+            en: "The missing dollar is a logic trap. You shouldn't add the apprentice's $2 tip to the $27 paid. You should SUBTRACT it: 27 - 2 = 25 (the cost of the room).",
+            tr: "Kayıp dolar bir mantık tuzağıdır. Çırağın 2 dolarlık bahşişini ödenen 27 dolara eklememeli, ondan ÇIKARMALISINIZ: 27 - 2 = 25 (odanın gerçek ücreti)."
+        },
+        hint: {
+            en: "Separate the 'Total Paid' from the 'Total Spent'.",
+            tr: "'Ödenen Toplam' ile 'Harcanan Toplam'ı ayırın."
         }
     },
     {
@@ -157,8 +189,12 @@ const questions = [
         },
         correct: 2,
         logic: {
-            en: "This is a Fibonacci sequence problem f(n) = f(n-1) + f(n-2). For step 10, it is the 11th Fibonacci number, which is 89.",
-            tr: "Bu bir Fibonacci dizisi problemidir. 10. basamak için sonuç 11. Fibonacci sayısı olan 89'dur."
+            en: "Number of ways of climbing N steps is Fibonacci(N+1). For 10 steps, it is the 11th number in the sequence: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89.",
+            tr: "N basamağı tırmanma yollarının sayısı Fibonacci(N+1)'dir. 10 basamak için dizideki 11. Sayıdır: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89."
+        },
+        hint: {
+            en: "Look for a pattern: 1 step (1 way), 2 steps (2 ways), 3 steps (3 ways), 4 steps (5 ways)...",
+            tr: "Bir örüntü arayın: 1 basamak (1 yol), 2 basamak (2 yol), 3 basamak (3 yol), 4 basamak (5 yol)..."
         }
     },
     {
@@ -175,8 +211,12 @@ const questions = [
         },
         correct: 0,
         logic: {
-            en: "Acceleration upward (a) adds to gravity (g). The normal force N = m(g+a), so the scale shows a higher weight.",
-            tr: "Yukarı doğru ivmelenme yerçekimine eklenir. N = m(g+a) olduğu için tartı daha yüksek bir değer gösterir."
+            en: "F = ma (Force = Mass * Acceleration). When the elevator accelerates up, the upward force on you increases to provide that acceleration, making the reading higher.",
+            tr: "F = ma (Kuvvet = Kütle * İvme). Asansör yukarı hızlandığında, üzerinizdeki yukarı yönlü kuvvet artar ve bu da tartıda daha yüksek bir değer görünmesine neden olur."
+        },
+        hint: {
+            en: "Think about the force required to make you move upward quickly.",
+            tr: "Sizi hızla yukarı çıkarmak için gereken kuvveti düşünün."
         }
     },
     {
@@ -195,6 +235,10 @@ const questions = [
         logic: {
             en: "Turn Switch 1 ON for 10 mins, then OFF. Turn Switch 2 ON and enter. The ON bulb is Switch 2, the HOT/OFF bulb is Switch 1, the COLD/OFF is Switch 3.",
             tr: "1. anahtarı 10 dakika açık tutup kapatın. 2. anahtarı açıp odaya girin. Yanan ampul 2. anahtarın, sönük ama sıcak olan 1. anahtarın, sönük ve soğuk olan 3. anahtarındır."
+        },
+        hint: {
+            en: "Light bulbs emit something other than just light over time.",
+            tr: "Ampuller zamanla sadece ışık değil, başka bir şey de yayar."
         }
     },
     {
@@ -213,6 +257,10 @@ const questions = [
         logic: {
             en: "Initially, your door has 1/3 chance. The other two have 2/3 cumulative. When host reveals a goat, that 2/3 chance concentrates on the remaining unselected door.",
             tr: "Başlangıçta seçtiğin kapının şansı 1/3'tür. Diğer iki kapının toplam şansı 2/3'tür. Sunucu bir keçiyi elediğinde, o 2/3'lük şans kalan diğer kapıda toplanır."
+        },
+        hint: {
+            en: "The host's choice is not random; they MUST open a door with a goat.",
+            tr: "Sunucunun seçimi rastgele değildir; mutlaka bir keçi kapısını açmak zorundadır."
         }
     },
     {
@@ -231,6 +279,10 @@ const questions = [
         logic: {
             en: "To minimize the total drops, we want a 'balanced' strategy where the sum of drops with the 1st egg and the sequential drops with the 2nd egg is constant. This leads to the triangular number formula: x + (x-1) + (x-2)... + 1 >= 100. Solving for x gives 14. You first drop from floor 14, then 27 (14+13), then 39 (27+12), etc.",
             tr: "Toplam deneme sayısını minimize etmek için 'dengeli' bir strateji isteriz: 1. yumurtayla yapılan 'atlama' mesafesi azaldıkça, 2. yumurtayla yapılacak ardışık deneme payı artar. Bu bizi x + (x-1) + (x-2)... + 1 >= 100 formülüne götürür. x buradan 14 çıkar. İlk olarak 14. kattan, sonra 27 (14+13), sonra 39 (27+12). kattan atarak ilerlersiniz."
+        },
+        hint: {
+            en: "Try to balance the potential drops of the first and second egg.",
+            tr: "Birinci ve ikinci yumurta için potansiyel deneme sayılarını dengelemeye çalışın."
         }
     },
     {
@@ -248,7 +300,11 @@ const questions = [
         correct: 0,
         logic: {
             en: "Each prisoner represents a binary bit. 2^10 = 1024, which is enough to cover 1000 bottles. Each bottle is numbered in binary and fed to prisoners corresponding to its '1' bits.",
-            tr: "Her mahkum bir binary biti temsil eder. 2^10 = 1024 olduğu için 1000 şişeyi kapsar. Her şişe ikilik sistemde numaralandırılır ve '1' olan basamağa denk gelen mahkumlara tattırılır."
+            tr: "Her mahkum bir binary biti temsil eder. 2^10 = 1024 olduğu için 1000 şişeyi kapsar. Her şişe ikili sistemde numaralandırılır ve '1' olan basamağa denk gelen mahkumlara içirilir."
+        },
+        hint: {
+            en: "A single person can drink a mixture of many bottles at once.",
+            tr: "Bir kişi tek seferde birçok şişenin karışımını içebilir."
         }
     },
     {
@@ -265,8 +321,12 @@ const questions = [
         },
         correct: 0,
         logic: {
-            en: "Cut into 1, 2, and 4 units. Day 1: Give 1. Day 2: Give 2, take back 1. Day 3: Give 1. Day 4: Give 4, take 1 and 2. This continues like binary counting.",
-            tr: "Çubuğu 1, 2 ve 4 birimlik parçalara bölün. 1. Gün: 1'i ver. 2. Gün: 2'yi ver, 1'i geri al. 3. Gün: 1'i ver. 4. Gün: 4'ü ver, 1 ve 2'yi geri al. İkili sayma mantığıyla devam eder."
+            en: "You can use binary powers (1, 2, 4). On Day 1 give 1. Day 2 give 2 and take back 1. Day 3 give 1. Day 4 give 4 and take back 1 and 2, etc.",
+            tr: "İkili sayı sistemini (1, 2, 4) kullanabilirsiniz. 1. Gün 1 birim verin. 2. Gün 2 birim verip 1'i geri alın. 3. Gün 1 birim verin. 4. Gün 4 verip 1 ve 2'yi geri alın."
+        },
+        hint: {
+            en: "You can give a piece and take back change from the ones you already gave.",
+            tr: "Bir parça verip, daha önce verdiklerinizden 'para üstü' alabilirsiniz."
         }
     },
     {
