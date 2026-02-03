@@ -605,14 +605,37 @@ function showBirthdayViz() {
 
 function showMeetingViz() {
     elements.vizTarget.innerHTML = `
-        <div style="width:120px; height:120px; border:2px solid var(--primary); position:relative; background:#000">
-            <div style="position:absolute; top:25%; left:0; width:75%; height:75%; background:rgba(0,255,65,0.2); transform: skew(0, 0)"></div>
-            <div style="position:absolute; bottom:0; right:0; width:100%; height:100%; border:1px dashed var(--text-dim)"></div>
-            <div style="font-size:0.5rem; position:absolute; bottom:-15px; left:0">12:00</div>
-            <div style="font-size:0.5rem; position:absolute; bottom:-15px; right:0">1:00</div>
+        <div style="text-align:center; color:var(--primary); font-size:0.7rem; margin-bottom:10px">Drag the point to see if they meet!</div>
+        <div id="meetGrid" style="width:180px; height:180px; border:2px solid var(--primary); position:relative; background:#000; cursor:crosshair">
+            <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:linear-gradient(45deg, transparent 37.5%, rgba(0,255,65,0.2) 37.5%, rgba(0,255,65,0.2) 62.5%, transparent 62.5%)"></div>
+            <div id="meetPoint" style="width:10px; height:10px; background:var(--gold); border-radius:50%; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); box-shadow:var(--glow); pointer-events:none"></div>
         </div>
-        <div style="margin-top:20px; color:var(--gold); font-size:0.7rem">Meeting Zone: |X - Y| ≤ 15</div>
+        <div id="meetStatus" style="margin-top:15px; color:var(--gold); font-size:0.8rem; font-weight:900">TIME: 12:30 & 12:30</div>
     `;
+
+    const grid = document.getElementById('meetGrid');
+    const point = document.getElementById('meetPoint');
+    const status = document.getElementById('meetStatus');
+
+    const update = (e) => {
+        const rect = grid.getBoundingClientRect();
+        const x = Math.max(0, Math.min(180, e.clientX - rect.left));
+        const y = Math.max(0, Math.min(180, rect.bottom - e.clientY));
+        point.style.left = x + 'px';
+        point.style.bottom = y + 'px';
+        const t1 = Math.round((x / 180) * 60);
+        const t2 = Math.round((y / 180) * 60);
+        const diff = Math.abs(t1 - t2);
+        status.innerText = `TIME: 12:${t1.toString().padStart(2, '0')} & 12:${t2.toString().padStart(2, '0')}`;
+        status.style.color = diff <= 15 ? 'var(--primary)' : 'var(--error)';
+        status.innerHTML += diff <= 15 ? ' <br>MATCH!' : ' <br>MISSED';
+    };
+
+    grid.onmousedown = (e) => {
+        update(e);
+        window.onmousemove = update;
+        window.onmouseup = () => window.onmousemove = null;
+    };
 }
 
 elements.vizTarget.innerHTML = `
@@ -646,12 +669,47 @@ function showHackerProof(id) {
 
 function showStickViz() {
     elements.vizTarget.innerHTML = `
-        <div style="width:180px; height:4px; background:var(--text-dim); position:relative">
-            <div style="position:absolute; left:30%; height:10px; top:-3px; width:2px; background:var(--primary)"></div>
-            <div style="position:absolute; left:75%; height:10px; top:-3px; width:2px; background:var(--primary)"></div>
+        <div style="text-align:center; color:var(--primary); font-size:0.7rem; margin-bottom:15px">Drag the markers to break the stick!</div>
+        <div id="stickLine" style="width:240px; height:4px; background:var(--text-dim); position:relative; margin:40px auto; border-radius:2px">
+            <div id="cut1" style="width:14px; height:14px; background:var(--error); position:absolute; left:33%; top:-5px; cursor:ew-resize; border-radius:2px; box-shadow:0 0 5px var(--error)"></div>
+            <div id="cut2" style="width:14px; height:14px; background:var(--error); position:absolute; left:66%; top:-5px; cursor:ew-resize; border-radius:2px; box-shadow:0 0 5px var(--error)"></div>
         </div>
-        <div style="margin-top:25px; color:var(--gold); font-size:0.75rem">Condition: a+b > c, etc.</div>
+        <div id="stickResult" style="margin-top:25px; color:var(--primary); font-size:0.85rem; font-weight:700; text-align:center">PIECES: 33%, 33%, 34%</div>
     `;
+
+    const line = document.getElementById('stickLine');
+    const c1 = document.getElementById('cut1');
+    const c2 = document.getElementById('cut2');
+    const res = document.getElementById('stickResult');
+
+    const update = () => {
+        let p1 = parseFloat(c1.style.left) / 100;
+        let p2 = parseFloat(c2.style.left) / 100;
+        let pts = [p1, p2].sort((a, b) => a - b);
+        let a = pts[0];
+        let b = pts[1] - pts[0];
+        let c = 1 - pts[1];
+
+        const possible = (a + b > c) && (a + c > b) && (b + c > a);
+        res.innerHTML = `PIECES: ${Math.round(a * 100)}%, ${Math.round(b * 100)}%, ${Math.round(c * 100)}%<br>`;
+        res.innerHTML += possible ? '<span style="color:var(--primary)">TRIANGLE POSSIBLE!</span>' : '<span style="color:var(--error)">IMPOSSIBLE</span>';
+    };
+
+    const setup = (el) => {
+        el.onmousedown = (e) => {
+            const move = (me) => {
+                const rect = line.getBoundingClientRect();
+                let pct = Math.max(0, Math.min(100, ((me.clientX - rect.left) / rect.width) * 100));
+                el.style.left = pct + '%';
+                update();
+            };
+            window.onmousemove = move;
+            window.onmouseup = () => window.onmousemove = null;
+        };
+    };
+    setup(c1);
+    setup(c2);
+    update();
 }
 
 function showBiasedViz() {
