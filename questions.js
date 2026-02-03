@@ -178,5 +178,95 @@ const questions = [
             en: "Acceleration upward (a) adds to gravity (g). The normal force N = m(g+a), so the scale shows a higher weight.",
             tr: "Yukarı doğru ivmelenme yerçekimine eklenir. N = m(g+a) olduğu için tartı daha yüksek bir değer gösterir."
         }
+    },
+    {
+        id: "switches",
+        category: { en: "Logic", tr: "Mantık" },
+        title: { en: "The 3 Switches", tr: "3 Anahtar" },
+        question: {
+            en: "There are 3 light switches outside a room and 3 bulbs inside. You can only enter the room once. How do you determine which switch controls which bulb?",
+            tr: "Bir odanın dışında 3 anahtar, içinde 3 ampul var. Odaya sadece bir kez girme hakkınız var. Hangi anahtarın hangi ampulü yaktığını nasıl anlarsınız?"
+        },
+        options: {
+            en: ["Use Heat", "Random Guess", "Listen to noise", "Impossible"],
+            tr: ["Isıyı Kullan", "Rastgele Tahmin", "Sesi Dinle", "İmkansız"]
+        },
+        correct: 0,
+        logic: {
+            en: "Turn Switch 1 ON for 10 mins, then OFF. Turn Switch 2 ON and enter. The ON bulb is Switch 2, the HOT/OFF bulb is Switch 1, the COLD/OFF is Switch 3.",
+            tr: "1. anahtarı 10 dakika açık tutup kapatın. 2. anahtarı açıp odaya girin. Yanan ampul 2. anahtarın, sönük ama sıcak olan 1. anahtarın, sönük ve soğuk olan 3. anahtarındır."
+        }
+    },
+    {
+        id: "monty",
+        category: { en: "Probability", tr: "Olasılık" },
+        title: { en: "Monty Hall", tr: "Monty Hall" },
+        question: {
+            en: "You pick one of 3 doors. The host opens another door to reveal a goat. Should you switch to the remaining door to find the car?",
+            tr: "3 kapıdan birini seçiyorsun. Sunucu diğer kapılardan birini açıp arkasındaki keçiyi gösteriyor. Arabayı bulmak için kapını değiştirmeli misin?"
+        },
+        options: {
+            en: ["Doesn't matter", "Yes, Always", "No, Stay", "Depends on luck"],
+            tr: ["Fark etmez", "Evet, Herzaman", "Hayır, Kal", "Şansa bağlı"]
+        },
+        correct: 1,
+        logic: {
+            en: "Initially, your door has 1/3 chance. The other two have 2/3 cumulative. When host reveals a goat, that 2/3 chance concentrates on the remaining unselected door.",
+            tr: "Başlangıçta seçtiğin kapının şansı 1/3'tür. Diğer iki kapının toplam şansı 2/3'tür. Sunucu bir keçiyi elediğinde, o 2/3'lük şans kalan diğer kapıda toplanır."
+        }
+    },
+    {
+        id: "eggs",
+        category: { en: "Optimization", tr: "Optimizasyon" },
+        title: { en: "Two Eggs", tr: "İki Yumurta" },
+        question: {
+            en: "With 2 eggs and a 100-story building, find the highest floor an egg can drop from without breaking in MINIMUM drops.",
+            tr: "2 yumurta ve 100 katlı bir bina ile, bir yumurtanın kırılmadan atılabileceği en yüksek katı EN AZ denemeyle nasıl bulursunuz?"
+        },
+        options: {
+            en: ["10", "14", "50", "25"],
+            tr: ["10", "14", "50", "25"]
+        },
+        correct: 1,
+        logic: {
+            en: "Using the formula x+(x-1)+(x-2)...+1 >= 100, we find x=14. You drop from floors 14, 27, 39, etc. to minimize the worst-case scenario.",
+            tr: "x+(x-1)+(x-2)...+1 >= 100 formülünden x=14 bulunur. En kötü durumu minimize etmek için 14, 27, 39. katlar şeklinde ilerlenir."
+        }
+    },
+    {
+        id: "poison",
+        category: { en: "Binary Logic", tr: "İkili Mantık" },
+        title: { en: "Poisoned Wine", tr: "Zehirli Şarap" },
+        question: {
+            en: "1000 bottles of wine, 1 is poisoned. Poison kills in 24 hours. What is the minimum number of prisoners needed to find the poisoned bottle in exactly 24 hours?",
+            tr: "1000 şişe şarap var, 1'i zehirli. Zehir 24 saatte öldürüyor. Zehirli şişeyi tam 24 saatte bulmak için en az kaç mahkum gerekir?"
+        },
+        options: {
+            en: ["10", "100", "500", "9"],
+            tr: ["10", "100", "500", "9"]
+        },
+        correct: 0,
+        logic: {
+            en: "Each prisoner represents a binary bit. 2^10 = 1024, which is enough to cover 1000 bottles. Each bottle is numbered in binary and fed to prisoners corresponding to its '1' bits.",
+            tr: "Her mahkum bir binary biti temsil eder. 2^10 = 1024 olduğu için 1000 şişeyi kapsar. Her şişe ikilik sistemde numaralandırılır ve '1' olan basamağa denk gelen mahkumlara tattırılır."
+        }
+    },
+    {
+        id: "gold",
+        category: { en: "Logic", tr: "Mantık" },
+        title: { en: "The Gold Bar", tr: "Altın Çubuk" },
+        question: {
+            en: "A worker works for 7 days. You have a 7-unit gold bar. You can only make 2 cuts. How do you pay him 1 unit every day?",
+            tr: "Bir işçi 7 gün çalışıyor. 7 birimlik bir altın çubuğunuz var. Sadece 2 kesim hakkınız var. İşçiye her gün 1 birim ödemeyi nasıl yaparsınız?"
+        },
+        options: {
+            en: ["1, 2, 4 units", "1, 1, 5 units", "2, 2, 3 units", "Impossible"],
+            tr: ["1, 2, 4 birim", "1, 1, 5 birim", "2, 2, 3 birim", "İmkansız"]
+        },
+        correct: 0,
+        logic: {
+            en: "Cut into 1, 2, and 4 units. Day 1: Give 1. Day 2: Give 2, take back 1. Day 3: Give 1. Day 4: Give 4, take 1 and 2. This continues like binary counting.",
+            tr: "Çubuğu 1, 2 ve 4 birimlik parçalara bölün. 1. Gün: 1'i ver. 2. Gün: 2'yi ver, 1'i geri al. 3. Gün: 1'i ver. 4. Gün: 4'ü ver, 1 ve 2'yi geri al. İkili sayma mantığıyla devam eder."
+        }
     }
 ];

@@ -234,6 +234,11 @@ elements.vizBtn.onclick = () => {
     if (q.id === 'children') showChildrenViz();
     if (q.id === 'dollar') showDollarViz();
     if (q.id === 'rabbit') showRabbitViz();
+    if (q.id === 'switches') showSwitchesViz();
+    if (q.id === 'monty') showMontyViz();
+    if (q.id === 'eggs') showEggsViz();
+    if (q.id === 'poison') showPoisonViz();
+    if (q.id === 'gold') showGoldViz();
 };
 
 // --- Matrix-Optimized Visualization Sub-factories ---
@@ -509,6 +514,118 @@ function showRabbitViz() {
         currentStep = 0;
         updateRabbit();
     };
+}
+
+function showSwitchesViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:20px; justify-content:center; align-items:flex-end; height:180px">
+            <div id="bulb1" class="bulb" style="background:#333; width:40px; height:60px; border-radius:20px 20px 5px 5px; border:2px solid #555"></div>
+            <div id="bulb2" class="bulb" style="background:#333; width:40px; height:60px; border-radius:20px 20px 5px 5px; border:2px solid #555"></div>
+            <div id="bulb3" class="bulb" style="background:#333; width:40px; height:60px; border-radius:20px 20px 5px 5px; border:2px solid #555"></div>
+        </div>
+        <div style="display:flex; gap:20px; margin-top:30px; justify-content:center">
+            <button class="btn primary small" id="sw1">SW 1</button>
+            <button class="btn primary small" id="sw2">SW 2</button>
+            <button class="btn primary small" id="sw3">SW 3</button>
+        </div>
+    `;
+    let b1Temp = 0; // 0 cold, 1 warm
+    document.getElementById('sw1').onclick = () => {
+        const b = document.getElementById('bulb1');
+        const active = b.style.background === 'var(--primary)';
+        b.style.background = active ? '#333' : 'var(--primary)';
+        if (!active) b1Temp = 1;
+    };
+    document.getElementById('sw2').onclick = () => {
+        const b = document.getElementById('bulb2');
+        b.style.background = b.style.background === 'var(--primary)' ? '#333' : 'var(--primary)';
+    };
+    document.getElementById('sw3').onclick = () => {
+        const b = document.getElementById('bulb3');
+        b.style.background = b.style.background === 'var(--primary)' ? '#333' : 'var(--primary)';
+    };
+}
+
+function showMontyViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:var(--primary); margin-bottom:15px">PICK A DOOR</div>
+        <div style="display:flex; gap:15px; justify-content:center">
+            <div class="monty-door" id="d1">1</div>
+            <div class="monty-door" id="d2">2</div>
+            <div class="monty-door" id="d3">3</div>
+        </div>
+        <div id="montyAdvice" style="margin-top:20px; color:var(--gold); text-align:center; min-height:24px"></div>
+    `;
+    const carIdx = Math.floor(Math.random() * 3);
+    const doors = document.querySelectorAll('.monty-door');
+    let picked = -1;
+
+    doors.forEach((d, i) => {
+        d.onclick = () => {
+            if (picked !== -1) return;
+            picked = i;
+            d.style.borderColor = "var(--primary)";
+            d.style.boxShadow = "var(--glow)";
+
+            // Host opens a goat door
+            let hostIdx = [0, 1, 2].find(idx => idx !== carIdx && idx !== picked);
+            setTimeout(() => {
+                doors[hostIdx].innerText = "🐐";
+                doors[hostIdx].style.opacity = "0.5";
+                document.getElementById('montyAdvice').innerText = currentLang === 'tr' ? "Sunucu keçiyi açtı! Değiştirmek daha mantıklı..." : "Host opened a goat! Switching is statistically better...";
+            }, 800);
+        };
+    });
+}
+
+function showEggsViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; gap:30px; align-items:flex-end">
+            <div id="building" style="width:60px; height:200px; border:2px solid var(--primary); background:rgba(0,255,65,0.05); position:relative">
+                <div id="floorMarker" style="position:absolute; bottom:0; width:100%; height:14%; border:1px solid var(--gold); background:rgba(212,175,55,0.1)"></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px">
+                <div style="color:var(--primary)">DROP FROM:</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px">
+                    <button class="btn primary small" onclick="document.getElementById('floorMarker').style.bottom='14%'">14</button>
+                    <button class="btn primary small" onclick="document.getElementById('floorMarker').style.bottom='27%'">27</button>
+                    <button class="btn primary small" onclick="document.getElementById('floorMarker').style.bottom='39%'">39</button>
+                    <button class="btn primary small" onclick="document.getElementById('floorMarker').style.bottom='50%'">50</button>
+                </div>
+                <div style="font-size:0.75rem; color:var(--text-dim); margin-top:10px">Interval: x, x-1, x-2...</div>
+            </div>
+        </div>
+    `;
+}
+
+function showPoisonViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="text-align:center; color:var(--primary); margin-bottom:15px">BINARY DECODING</div>
+        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; justify-content:center">
+            ${[...Array(10)].map((_, i) => `<div class="prisoner" id="p${i}" style="width:30px; height:40px; border:1px solid var(--primary); display:flex; align-items:center; justify-content:center; font-size:0.6rem">P${i}</div>`).join('')}
+        </div>
+        <div style="margin-top:20px; font-family:monospace; color:var(--gold); font-size:0.8rem; text-align:center">
+            Bottle #542 = <span style="color:#fff">1000011110</span><br>
+            Prisoners 1, 2, 3, 4, 9 would drink.
+        </div>
+    `;
+}
+
+function showGoldViz() {
+    elements.vizTarget.innerHTML = `
+        <div style="display:flex; flex-direction:column; align-items:center; gap:20px">
+            <div style="display:flex; gap:10px">
+                <div style="width:20px; height:40px; background:var(--gold); border:1px solid #000; display:flex; align-items:center; justify-content:center; color:#000; font-weight:900">1</div>
+                <div style="width:40px; height:40px; background:var(--gold); border:1px solid #000; display:flex; align-items:center; justify-content:center; color:#000; font-weight:900">2</div>
+                <div style="width:80px; height:40px; background:var(--gold); border:1px solid #000; display:flex; align-items:center; justify-content:center; color:#000; font-weight:900">4</div>
+            </div>
+            <div style="color:var(--primary); font-family:monospace; font-size:0.8rem">
+                Day 1: Give 1<br>
+                Day 2: Give 2, Take 1<br>
+                Day 3: Give 1
+            </div>
+        </div>
+    `;
 }
 
 init();
