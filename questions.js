@@ -8,8 +8,8 @@ const questions = [
             tr: "1'den 100'e kadar numaralandırılmış 100 kartlık bir desteden rastgele iki kart çekiyorsun. İkinci kartın birinciden daha büyük olma olasılığı nedir?"
         },
         options: {
-            en: ["1/4", "1/2", "1/3", "49/100"],
-            tr: ["1/4", "1/2", "1/3", "49/100"]
+            en: ["1/4", "1/2", "1/3", "49/100", "50/99", "51/100"],
+            tr: ["1/4", "1/2", "1/3", "49/100", "50/99", "51/100"]
         },
         correct: 1,
         logic: {
@@ -26,8 +26,8 @@ const questions = [
             tr: "Eşkenar bir üçgenin köşelerinde üç karınca var. Her biri aynı hızla bir kenar boyunca hareket etmeye başlıyor. Herhangi iki karıncanın çarpışmama olasılığı nedir?"
         },
         options: {
-            en: ["1/4", "1/8", "1/2", "1/16"],
-            tr: ["1/4", "1/8", "1/2", "1/16"]
+            en: ["1/4", "1/8", "1/2", "1/16", "3/4", "7/8"],
+            tr: ["1/4", "1/8", "1/2", "1/16", "3/4", "7/8"]
         },
         correct: 0,
         logic: {
@@ -44,8 +44,8 @@ const questions = [
             tr: "100 bozuk paranız var, 10 tanesi tura ve 90 tanesi yazı. Gözleriniz bağlıyken, bunları her iki grupta da aynı sayıda tura olacak şekilde ikiye nasıl ayırırsınız?"
         },
         options: {
-            en: ["Divide 50-50", "Take 10 coins and flip them all", "Take 10 coins and leave as is", "Take 90 coins and flip them"],
-            tr: ["50-50 ayır", "10 tanesini al ve hepsini ters çevir", "10 tanesini al ve olduğu gibi bırak", "90 tanesini al ve çevir"]
+            en: ["Divide 50-50", "Take 10 coins and flip them all", "Take 10 coins and leave as is", "Take 90 coins and flip them", "Flip all 100 coins", "Divide 10-90 without flipping"],
+            tr: ["50-50 ayır", "10 tanesini al ve hepsini ters çevir", "10 tanesini al ve olduğu gibi bırak", "90 tanesini al ve çevir", "Tüm 100 parayı çevir", "Çevirmeden 10-90 ayır"]
         },
         correct: 1,
         logic: {
@@ -62,8 +62,8 @@ const questions = [
             tr: "Yanması tam 1 saat süren ancak düzensiz yanan iki ipiniz var. Tam olarak 45 dakikayı nasıl ölçersiniz?"
         },
         options: {
-            en: ["Burn one and guess the middle", "Burn both from both ends", "Light one from both ends + one from one end", "Ropes cannot measure 45 mins"],
-            tr: ["Birini yakıp ortasını göz kararı seç", "Her ikisini de her iki uçtan yak", "Birini iki uçtan, diğerini tek uçtan yak", "İplerle 45 dakika ölçülemez"]
+            en: ["Burn one and guess the middle", "Burn both from both ends", "Light one from both ends + one from one end", "Wait for 15 mins then light", "Burn one for 30 mins then stop", "Ropes cannot measure 45 mins"],
+            tr: ["Birini yakıp ortasını göz kararı seç", "Her ikisini de her iki uçtan yak", "Birini iki uçtan diğeri tek uçtan, ilk bitince diğer ucu yak", "15 dk bekle sonra yak", "Birini 30 dk yakıp durdur", "İplerle 45 dakika ölçülemez"]
         },
         correct: 2,
         logic: {
@@ -80,8 +80,8 @@ const questions = [
             tr: "Saat tam 3:15. Akrep ve yelkovan arasındaki açı kaç derecedir?"
         },
         options: {
-            en: ["0°", "15°", "7.5°", "5°"],
-            tr: ["0°", "15°", "7.5°", "5°"]
+            en: ["0°", "15°", "7.5°", "5°", "2.5°", "10°"],
+            tr: ["0°", "15°", "7.5°", "5°", "2.5°", "10°"]
         },
         correct: 2,
         logic: {
@@ -98,8 +98,8 @@ const questions = [
             tr: "Bir çekmecede 10 siyah ve 10 beyaz çorabınız var. Bir çift eşleşme garanti etmek için en az kaç çorap çekmelisiniz?"
         },
         options: {
-            en: ["2", "3", "11", "21"],
-            tr: ["2", "3", "11", "21"]
+            en: ["2", "3", "11", "21", "10", "4"],
+            tr: ["2", "3", "11", "21", "10", "4"]
         },
         correct: 1,
         logic: {
@@ -116,8 +116,8 @@ const questions = [
             tr: "Bir ülke daha fazla kız çocuk istiyor. Her aile kız doğana kadar çocuk yapar ve kız doğunca durur. Kızların erkeklere beklenen oranı nedir?"
         },
         options: {
-            en: ["1:1", "2:1", "1:2", "Logarithmic"],
-            tr: ["1:1", "2:1", "1:2", "Logaritmik"]
+            en: ["1:1", "2:1", "1:2", "Logarithmic", "3:1", "Depends on population size"],
+            tr: ["1:1", "2:1", "1:2", "Logaritmik", "3:1", "Nüfus sayısına bağlı"]
         },
         correct: 0,
         logic: {
@@ -134,8 +134,8 @@ const questions = [
             tr: "3 misafir toplam 27 dolar öder. Otelin kasasında 25 dolar, çırağın cebinde 2 dolar vardır. 27+2=29 eder, kayıp 1 dolar nerededir?"
         },
         options: {
-            en: ["Calculation Error", "Accounting Illusion", "The Boy's pocket", "Inflation"],
-            tr: ["Hesap Hatası", "Muhasebe İllüzyonu", "Çırağın Cebinde", "Enflasyon"]
+            en: ["Calculation Error", "Accounting Illusion", "The Boy's pocket", "Inflation", "Tax deduction", "Missing in original $30"],
+            tr: ["Hesap Hatası", "Muhasebe İllüzyonu", "Çırağın Cebinde", "Enflasyon", "Vergi kesintisi", "Kayıp 30 doların içinde"]
         },
         correct: 1,
         logic: {
@@ -152,8 +152,8 @@ const questions = [
             tr: "Bir tavşan 0. basamakta. Her seferinde 1 veya 2 basamak zıplayabiliyor. 10. basamağa ulaşmak için kaç farklı yol vardır?"
         },
         options: {
-            en: ["10", "55", "89", "128"],
-            tr: ["10", "55", "89", "128"]
+            en: ["10", "55", "89", "128", "144", "233"],
+            tr: ["10", "55", "89", "128", "144", "233"]
         },
         correct: 2,
         logic: {
@@ -170,8 +170,8 @@ const questions = [
             tr: "Asansörde tartının üzerindesiniz. Asansör YUKARI doğru hızlanmaya başladığında tartı ne gösterir?"
         },
         options: {
-            en: ["Increases", "Decreases", "Stays same", "Goes to zero"],
-            tr: ["Artar", "Azalır", "Aynı kalır", "Sıfırlanır"]
+            en: ["Increases", "Decreases", "Stays same", "Goes to zero", "Increases then decreases", "Stays higher forever"],
+            tr: ["Artar", "Azalır", "Aynı kalır", "Sıfırlanır", "Artar sonra azalır", "Sürekli yüksek kalır"]
         },
         correct: 0,
         logic: {
@@ -188,8 +188,8 @@ const questions = [
             tr: "Bir odanın dışında 3 anahtar, içinde 3 ampul var. Odaya sadece bir kez girme hakkınız var. Hangi anahtarın hangi ampulü yaktığını nasıl anlarsınız?"
         },
         options: {
-            en: ["Use Heat", "Random Guess", "Listen to noise", "Impossible"],
-            tr: ["Isıyı Kullan", "Rastgele Tahmin", "Sesi Dinle", "İmkansız"]
+            en: ["Use Heat", "Random Guess", "Listen to noise", "Measure with thermometer", "Switch 1 ON, Switch 2 ON", "Impossible"],
+            tr: ["Isıyı Kullan", "Rastgele Tahmin", "Sesi Dinle", "Termometreyle ölç", "Anahtar 1 açık, 2 açık", "İmkansız"]
         },
         correct: 0,
         logic: {
@@ -206,8 +206,8 @@ const questions = [
             tr: "3 kapıdan birini seçiyorsun. Sunucu diğer kapılardan birini açıp arkasındaki keçiyi gösteriyor. Arabayı bulmak için kapını değiştirmeli misin?"
         },
         options: {
-            en: ["Doesn't matter", "Yes, Always", "No, Stay", "Depends on luck"],
-            tr: ["Fark etmez", "Evet, Herzaman", "Hayır, Kal", "Şansa bağlı"]
+            en: ["Doesn't matter", "Yes, Always", "No, Stay", "Depends on luck", "Switching decreases odds", "Probability becomes 1/2"],
+            tr: ["Fark etmez", "Evet, Herzaman", "Hayır, Kal", "Şansa bağlı", "Değiştirmek şansı azaltır", "Olasılık 1/2 olur"]
         },
         correct: 1,
         logic: {
@@ -224,8 +224,8 @@ const questions = [
             tr: "2 yumurta ve 100 katlı bir bina ile, bir yumurtanın kırılmadan atılabileceği en yüksek katı EN AZ denemeyle nasıl bulursunuz?"
         },
         options: {
-            en: ["10", "14", "50", "25"],
-            tr: ["10", "14", "50", "25"]
+            en: ["10", "14", "50", "25", "9", "20"],
+            tr: ["10", "14", "50", "25", "9", "20"]
         },
         correct: 1,
         logic: {
@@ -242,8 +242,8 @@ const questions = [
             tr: "1000 şişe şarap var, 1'i zehirli. Zehir 24 saatte öldürüyor. Zehirli şişeyi tam 24 saatte bulmak için en az kaç mahkum gerekir?"
         },
         options: {
-            en: ["10", "100", "500", "9"],
-            tr: ["10", "100", "500", "9"]
+            en: ["10", "100", "500", "9", "7", "1024"],
+            tr: ["10", "100", "500", "9", "7", "1024"]
         },
         correct: 0,
         logic: {
@@ -260,8 +260,8 @@ const questions = [
             tr: "Bir işçi 7 gün çalışıyor. 7 birimlik bir altın çubuğunuz var. Sadece 2 kesim hakkınız var. İşçiye her gün 1 birim ödemeyi nasıl yaparsınız?"
         },
         options: {
-            en: ["1, 2, 4 units", "1, 1, 5 units", "2, 2, 3 units", "Impossible"],
-            tr: ["1, 2, 4 birim", "1, 1, 5 birim", "2, 2, 3 birim", "İmkansız"]
+            en: ["1, 2, 4 units", "1, 1, 5 units", "2, 2, 3 units", "3, 4 units", "7 individual units", "Impossible"],
+            tr: ["1, 2, 4 birim", "1, 1, 5 birim", "2, 2, 3 birim", "3, 4 birim", "7 tekil birim", "İmkansız"]
         },
         correct: 0,
         logic: {
