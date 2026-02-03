@@ -11,18 +11,24 @@
 
 <body>
     <div class="app-layout">
-        <button id="menuToggle" class="menu-toggle">☰</button>
+        <div class="top-bar">
+            <button id="menuToggle" class="menu-toggle">☰</button>
+            <div class="lang-switcher-top">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="tr">TR</button>
+            </div>
+        </div>
         <aside class="sidebar" id="sidebar">
             <div class="brand">Quant<span>LAB</span></div>
             <div class="progress-container">
+                <div class="stats-row">
+                    <div class="stat-item">✨ <span id="xpValue">0</span> XP</div>
+                    <div class="stat-item">🔥 <span id="streakValue">0</span></div>
+                </div>
                 <div class="progress-bar">
                     <div id="progressFill" class="fill"></div>
                 </div>
-                <span id="progressText">0/4 Completed</span>
-            </div>
-            <div class="lang-switcher">
-                <button class="lang-btn active" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="tr">TR</button>
+                <span id="progressText">0/10 Completed</span>
             </div>
             <nav id="questionNav"></nav>
         </aside>

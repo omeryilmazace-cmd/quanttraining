@@ -1,5 +1,7 @@
 let currentIdx = 0;
 let solvedCount = 0;
+let xp = 0;
+let streak = 0;
 let currentLang = 'en';
 const results = new Array(questions.length).fill(null);
 
@@ -10,7 +12,10 @@ const uiStrings = {
         visualize: "Visualize Logic 👁️",
         next: "Next Question →",
         secret: "The Secret Behind It",
-        gameOver: "GAME OVER! Final Score"
+        gameOver: "GAME OVER! Final Score",
+        correct: "Correct! +100 XP",
+        wrong: "Incorrect. Try visualizing.",
+        streakBonus: "Streak Bonus! +50 XP"
     },
     tr: {
         progress: "Tamamlandı",
@@ -18,7 +23,10 @@ const uiStrings = {
         visualize: "Mantığı Görselleştir 👁️",
         next: "Sıradaki Soru →",
         secret: "İşin Sırrı Burada",
-        gameOver: "OYUN BİTTİ! Toplam Skor"
+        gameOver: "OYUN BİTTİ! Toplam Skor",
+        correct: "Doğru! +100 XP",
+        wrong: "Yanlış. Mantığı incele.",
+        streakBonus: "Seri Bonusu! +50 XP"
     }
 };
 
@@ -38,7 +46,10 @@ const elements = {
     progressText: document.getElementById('progressText'),
     sidebar: document.getElementById('sidebar'),
     menuToggle: document.getElementById('menuToggle'),
-    langBtns: document.querySelectorAll('.lang-btn')
+    langBtns: document.querySelectorAll('.lang-btn'),
+    xpValue: document.getElementById('xpValue'),
+    streakValue: document.getElementById('streakValue'),
+    feedbackArea: document.getElementById('feedbackArea')
 };
 
 function init() {
@@ -51,7 +62,8 @@ function init() {
         btn.onclick = () => {
             currentLang = btn.dataset.lang;
             elements.langBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            // Sync all lang buttons (top and potentially sidebar)
+            document.querySelectorAll(`.lang-btn[data-lang="${currentLang}"]`).forEach(el => el.classList.add('active'));
             updateStaticStrings();
             loadQuestion(currentIdx);
             renderNav();
@@ -72,20 +84,26 @@ function renderNav() {
     questions.forEach((q, i) => {
         const div = document.createElement('div');
         div.className = `nav-item ${i === currentIdx ? 'active' : ''} ${results[i] !== null ? 'done' : ''}`;
-        div.innerText = `${i + 1}. ${q.title}`;
-        div.onclick = () => { currentIdx = i; loadQuestion(i); renderNav(); };
+        div.innerText = `${i + 1}. ${q.title[currentLang]}`;
+        div.onclick = () => {
+            currentIdx = i;
+            loadQuestion(i);
+            renderNav();
+            elements.sidebar.classList.remove('open');
+        };
         elements.nav.appendChild(div);
     });
 }
 
 function loadQuestion(idx) {
     const q = questions[idx];
-    elements.title.innerText = q.title;
-    elements.desc.innerText = q.question;
-    elements.badge.innerText = q.category;
+    elements.title.innerText = q.title[currentLang];
+    elements.desc.innerText = q.question[currentLang];
+    elements.badge.innerText = q.category[currentLang];
     elements.grid.innerHTML = '';
+    elements.feedbackArea.classList.add('hidden');
 
-    q.options.forEach((opt, i) => {
+    q.options[currentLang].forEach((opt, i) => {
         const div = document.createElement('div');
         div.className = 'option';
         div.innerText = opt;
@@ -117,6 +135,8 @@ function updateUI(idx) {
 
     elements.progressFill.style.width = `${(solvedCount / questions.length) * 100}%`;
     elements.progressText.innerText = `${solvedCount}/${questions.length} ${uiStrings[currentLang].progress}`;
+    elements.xpValue.innerText = xp;
+    elements.streakValue.innerText = streak;
 }
 
 elements.checkBtn.onclick = () => {
@@ -127,12 +147,24 @@ elements.checkBtn.onclick = () => {
     const selectedIdx = Array.from(elements.grid.children).indexOf(selected);
     results[currentIdx] = selectedIdx;
 
+    elements.feedbackArea.classList.remove('hidden');
+    const statusIcon = elements.feedbackArea.querySelector('.status-icon');
+    const feedbackText = elements.feedbackArea.querySelector('.feedback-text');
+
     if (selectedIdx === q.correct) {
         selected.classList.add('correct');
         solvedCount++;
+        xp += 100;
+        streak++;
+        if (streak > 2) xp += 50;
+        statusIcon.innerText = "✅";
+        feedbackText.innerText = uiStrings[currentLang].correct + (streak > 2 ? ` (+50 ${uiStrings[currentLang].streakBonus})` : "");
     } else {
         selected.classList.add('wrong');
         elements.grid.children[q.correct].classList.add('correct');
+        streak = 0;
+        statusIcon.innerText = "❌";
+        feedbackText.innerText = uiStrings[currentLang].wrong;
     }
 
     renderNav();
@@ -151,7 +183,6 @@ elements.vizBtn.onclick = () => {
     elements.vizTarget.innerHTML = '';
     elements.overlay.classList.remove('hidden');
 
-    // Trigger specific visualization
     if (q.id === 'cards') showCardsViz();
     if (q.id === 'coins') showCoinsViz();
     if (q.id === 'clock') showClockViz();
@@ -173,7 +204,6 @@ function showAntsViz() {
             <div style="position:absolute; bottom:0; right:0; width:10px; height:10px; background:#6366f1; border-radius:50%; animation: ant3 2s infinite linear;"></div>
             <div style="width:0; height:0; border-left:100px solid transparent; border-right:100px solid transparent; border-bottom:173px solid rgba(255,255,255,0.05);"></div>
         </div>
-        <div style="margin-top:20px; color:white">All CCW or All CW avoids collision.</div>
     `;
 }
 
@@ -198,7 +228,6 @@ function showSocksViz() {
             <div style="width:40px; height:60px; background:black; border:1px solid white; border-radius:5px"></div>
             <div style="width:40px; height:60px; background:white; border-radius:5px; border:3px solid #10b981"></div>
         </div>
-        <p style="color:white; margin-top:20px">3rd sock MUST match one of the first two.</p>
     `;
 }
 
@@ -208,7 +237,6 @@ function showChildrenViz() {
             <div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
             <div style="color:pink">G</div><div style="color:pink">G</div><div style="color:cyan">B</div><div style="color:pink">G</div><div style="color:cyan">B</div>
         </div>
-        <p style="color:white; margin-top:20px">Each birth is 50/50 regardless of history.</p>
     `;
 }
 
