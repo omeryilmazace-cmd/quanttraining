@@ -419,9 +419,11 @@ h1 {
     background: rgba(0, 5, 0, 1);
     margin-bottom: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+    padding: 20px;
 }
 
 .logic-box {
@@ -440,15 +442,27 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* Injected Viz Styles - Matrix Mode */
-.viz-card {
-    width: 70px;
-    height: 100px;
+.interactive-card {
+    width: 90px;
+    height: 130px;
     background: #000;
     border: 1px solid var(--primary);
     color: var(--primary);
-    font-size: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
     text-shadow: var(--glow);
+}
+
+.interactive-card.revealed {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: var(--glow);
+    transform: rotateY(360deg);
 }
 
 .coin {

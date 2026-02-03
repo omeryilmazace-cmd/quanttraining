@@ -308,10 +308,10 @@ function showSocksViz() {
 
 function showCardsViz() {
     elements.vizTarget.innerHTML = `
-        <div style="text-align:center; color:#94a3b8; margin-bottom:20px; font-size:0.8rem">${uiStrings[currentLang].vizHint}</div>
-        <div style="display:flex; gap:20px; justify-content:center; align-items:center">
+        <div style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:0.85rem">${uiStrings[currentLang].vizHint}</div>
+        <div style="display:flex; gap:30px; justify-content:center; align-items:center; width:100%">
             <div class="interactive-card" id="c1">?</div>
-            <div style="font-size:1.5rem; color:gold; font-weight:800">VS</div>
+            <div style="font-size:1.5rem; color:var(--gold); font-weight:800; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5)">VS</div>
             <div class="interactive-card" id="c2">?</div>
         </div>
     `;
