@@ -1,6 +1,26 @@
 let currentIdx = 0;
 let solvedCount = 0;
+let currentLang = 'en';
 const results = new Array(questions.length).fill(null);
+
+const uiStrings = {
+    en: {
+        progress: "Completed",
+        check: "Check Answer",
+        visualize: "Visualize Logic 👁️",
+        next: "Next Question →",
+        secret: "The Secret Behind It",
+        gameOver: "GAME OVER! Final Score"
+    },
+    tr: {
+        progress: "Tamamlandı",
+        check: "Cevabı Kontrol Et",
+        visualize: "Mantığı Görselleştir 👁️",
+        next: "Sıradaki Soru →",
+        secret: "İşin Sırrı Burada",
+        gameOver: "OYUN BİTTİ! Toplam Skor"
+    }
+};
 
 const elements = {
     nav: document.getElementById('questionNav'),
@@ -17,7 +37,8 @@ const elements = {
     progressFill: document.getElementById('progressFill'),
     progressText: document.getElementById('progressText'),
     sidebar: document.getElementById('sidebar'),
-    menuToggle: document.getElementById('menuToggle')
+    menuToggle: document.getElementById('menuToggle'),
+    langBtns: document.querySelectorAll('.lang-btn')
 };
 
 function init() {
@@ -25,6 +46,25 @@ function init() {
     loadQuestion(0);
     document.querySelector('.close-overlay').onclick = () => elements.overlay.classList.add('hidden');
     elements.menuToggle.onclick = () => elements.sidebar.classList.toggle('open');
+
+    elements.langBtns.forEach(btn => {
+        btn.onclick = () => {
+            currentLang = btn.dataset.lang;
+            elements.langBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updateStaticStrings();
+            loadQuestion(currentIdx);
+            renderNav();
+        };
+    });
+}
+
+function updateStaticStrings() {
+    const s = uiStrings[currentLang];
+    elements.checkBtn.innerText = s.check;
+    elements.vizBtn.innerText = s.visualize;
+    elements.nextBtn.innerText = s.next;
+    document.querySelector('.logic-box h3').innerText = s.secret;
 }
 
 function renderNav() {
@@ -76,7 +116,7 @@ function updateUI(idx) {
     }
 
     elements.progressFill.style.width = `${(solvedCount / questions.length) * 100}%`;
-    elements.progressText.innerText = `${solvedCount}/${questions.length} Completed`;
+    elements.progressText.innerText = `${solvedCount}/${questions.length} ${uiStrings[currentLang].progress}`;
 }
 
 elements.checkBtn.onclick = () => {
@@ -107,7 +147,7 @@ elements.nextBtn.onclick = () => {
 
 elements.vizBtn.onclick = () => {
     const q = questions[currentIdx];
-    elements.logicText.innerText = q.logic;
+    elements.logicText.innerText = q.logic[currentLang];
     elements.vizTarget.innerHTML = '';
     elements.overlay.classList.remove('hidden');
 
